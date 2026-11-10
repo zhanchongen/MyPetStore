@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('商品管理', ~{::content})}">
+<body>
+<main th:fragment="content" class="page-stack">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">PRODUCTS</p>
+            <h2>商品管理</h2>
+            <p class="muted">维护商品资料、上下架与增量补货；不提供删除、销量字段或相册维护。</p>
+        </div>
+        <a class="btn btn--primary" th:href="@{/products/new}">＋ 新增商品</a>
+    </section>
+
+    <section class="card filter-card">
+        <form method="get" th:action="@{/products}" class="filter-form">
+            <label class="field field--compact">
+                <span>一级分类</span>
+                <select name="topCategoryId">
+                    <option value="">全部一级分类</option>
+                    <option th:each="top : ${topCategories}"
+                            th:value="${top.id}"
+                            th:text="${top.name}"
+                            th:selected="${topCategoryId != null and topCategoryId == top.id}">一级</option>
+                </select>
+            </label>
+            <label class="field field--compact">
+                <span>二级分类</span>
+                <select name="categoryId">
+                    <option value="">全部二级分类</option>
+                    <optgroup th:each="top : ${topCategories}" th:label="${top.name}">
+                        <option th:each="c : ${secondCategories}"
+                                th:if="${c.parentId == top.id}"
+                                th:value="${c.id}"
+                                th:text="${c.name}"
+                                th:selected="${categoryId != null and categoryId == c.id}">二级</option>
+                    </optgroup>
+                </select>
+            </label>
+            <label class="field field--compact">
+                <span>名称关键词</span>
+                <input type="text" name="keyword" maxlength="120" th:value="${keyword}" placeholder="输入商品名称关键词">
+            </label>
+            <label class="field field--compact">
+                <span>状态</span>
+                <select name="status">
+                    <option value="">全部状态</option>
+                    <option th:each="s : ${statusOptions}"
+                            th:value="${s.name()}"
+                            th:text="${s.label}"
+                            th:selected="${status == s.name()}">上架</option>
+                </select>
+            </label>
+            <div class="filter-actions">
+                <button type="submit" class="btn btn--primary btn--sm">查询</button>
+                <a class="btn btn--ghost btn--sm" th:href="@{/products}">重置</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="table-meta">
+            <span th:text="${'共 ' + pageResult.total() + ' 个商品'}">共 0 个商品</span>
+            <span class="muted" th:text="${'第 ' + pageResult.fromIndex() + '–' + pageResult.toIndex() + ' 条'}">第 0–0 条</span>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>SKU</th>
+                    <th>名称</th>
+                    <th>分类</th>
+                    <th class="num">价格</th>
+                    <th class="num">库存</th>
+                    <th>状态</th>
+                    <th class="num">排序</th>
+                    <th class="actions-col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${pageResult.records()}">
+                    <td th:text="${row.id}">1</td>
+                    <td><code th:text="${row.sku}">SKU</code></td>
+                    <td>
+                        <strong th:text="${row.name}">商品名称</strong>
+                        <span class="muted block" th:text="${row.categoryName}">分类</span>
+                    </td>
+                    <td th:text="${row.categoryName}">分类</td>
+                    <td class="num" th:text="${@money.format(row.price)}">¥0.00</td>
+                    <td class="num">
+                        <span th:text="${row.stock}">0</span>
+                        <span class="badge badge--danger" th:if="${row.soldOut}">售罄</span>
+                    </td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${row.status.name() == 'ON_SALE'} ? 'badge--green' : 'badge--muted'"
+                              th:text="${row.status.label}">上架</span>
+                    </td>
+                    <td class="num" th:text="${row.sortOrder}">0</td>
+                    <td class="actions">
+                        <a class="btn btn--ghost btn--sm" th:href="@{/products/{id}/edit(id=${row.id})}">编辑</a>
+                        <a class="btn btn--ghost btn--sm" th:href="@{/products/{id}/replenish(id=${row.id})}">补货</a>
+                        <form th:action="@{/products/{id}/status(id=${row.id})}" method="post" class="inline-form">
+                            <input type="hidden" name="_csrf" th:value="${_csrf}">
+                            <input type="hidden" name="version" th:value="${row.version}">
+                            <input type="hidden" name="back" th:value="@{/products}">
+                            <input type="hidden" name="status"
+                                   th:value="${row.status.name() == 'ON_SALE'} ? 'DRAFT' : 'ON_SALE'">
+                            <button type="submit" class="btn btn--sm"
+                                    th:classappend="${row.status.name() == 'ON_SALE'} ? 'btn--ghost' : 'btn--primary'"
+                                    th:text="${row.status.name() == 'ON_SALE'} ? '下架' : '上架'">上架</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${pageResult.isEmpty()}">
+                    <td colspan="9" class="empty-cell">没有符合条件的商品。</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{fragments/pagination :: pager(${pageLinks})}"></div>
+    </section>
+</main>
+</body>
+</html>

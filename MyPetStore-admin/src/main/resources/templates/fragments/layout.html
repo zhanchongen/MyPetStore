@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' · MyPetStore 管理端'">MyPetStore 管理端</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="admin-shell">
+    <aside class="admin-sidebar">
+        <a class="admin-brand" th:href="@{/dashboard}">
+            <span class="admin-brand__mark">MP</span>
+            <span class="admin-brand__text">MyPetStore<small>管理端</small></span>
+        </a>
+        <nav class="admin-nav">
+            <a th:href="@{/dashboard}" th:classappend="${active == 'dashboard'} ? 'is-active'">
+                <span class="admin-nav__icon">⌂</span>控制台
+            </a>
+            <a th:href="@{/categories}" th:classappend="${active == 'categories'} ? 'is-active'">
+                <span class="admin-nav__icon">▤</span>分类管理
+            </a>
+            <a th:href="@{/products}" th:classappend="${active == 'products'} ? 'is-active'">
+                <span class="admin-nav__icon">▦</span>商品管理
+            </a>
+            <a th:href="@{/orders}" th:classappend="${active == 'orders'} ? 'is-active'">
+                <span class="admin-nav__icon">▣</span>订单管理
+            </a>
+            <a th:href="@{/users}" th:classappend="${active == 'users'} ? 'is-active'">
+                <span class="admin-nav__icon">☺</span>用户管理
+            </a>
+        </nav>
+        <div class="admin-sidebar__foot">
+            <p class="admin-sidebar__note">实验一 · SSM 宠物商城</p>
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf}">
+                <button type="submit" class="link-button">退出登录</button>
+            </form>
+        </div>
+    </aside>
+
+    <div class="admin-main">
+        <header class="admin-topbar">
+            <div>
+                <p class="admin-topbar__eyebrow">MyPetStore Admin</p>
+                <h1 th:text="${title}">管理端</h1>
+            </div>
+            <div class="admin-user" th:if="${currentAdmin != null}">
+                <span class="admin-user__name" th:text="${currentAdmin.displayName()}">管理员</span>
+                <span class="admin-user__account" th:text="${'@' + currentAdmin.username()}">@admin</span>
+            </div>
+        </header>
+
+        <main class="admin-content">
+            <div class="flash-stack" th:if="${message}">
+                <div class="flash flash--success" th:text="${message}">操作成功。</div>
+            </div>
+            <div class="flash-stack" th:if="${error}">
+                <div class="flash flash--error" th:text="${error}">操作失败。</div>
+            </div>
+            <div th:replace="${content}"></div>
+        </main>
+    </div>
+</div>
+<script th:src="@{/js/admin.js}"></script>
+</body>
+</html>

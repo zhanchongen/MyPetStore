@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('分类管理', ~{::content})}">
+<body>
+<main th:fragment="content" class="page-stack">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">CATALOG</p>
+            <h2>分类管理</h2>
+            <p class="muted">分类最多两级；编码与父子关系创建后不可修改。</p>
+        </div>
+        <a class="btn btn--primary" th:href="@{/categories/new}">＋ 新增分类</a>
+    </section>
+
+    <section class="card">
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>层级</th>
+                    <th>名称</th>
+                    <th>编码</th>
+                    <th>父分类</th>
+                    <th>排序</th>
+                    <th>子分类</th>
+                    <th>商品引用</th>
+                    <th class="actions-col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${rows}" th:classappend="${row.topLevel} ? 'row-top' : 'row-child'">
+                    <td>
+                        <span class="badge" th:classappend="${row.topLevel} ? 'badge--blue' : 'badge--muted'"
+                              th:text="${row.topLevel} ? '一级' : '二级'">一级</span>
+                    </td>
+                    <td>
+                        <span class="tree-mark" th:if="${!row.topLevel}">└</span>
+                        <strong th:text="${row.category.name}">分类名称</strong>
+                    </td>
+                    <td><code th:text="${row.category.code}">CODE</code></td>
+                    <td th:text="${row.parentName}">—</td>
+                    <td th:text="${row.category.sortOrder}">0</td>
+                    <td th:text="${row.childCount}">0</td>
+                    <td>
+                        <span th:text="${row.productCount}">0</span>
+                        <span class="muted" th:if="${row.productCount > 0}">（含下架）</span>
+                    </td>
+                    <td class="actions">
+                        <a class="btn btn--ghost btn--sm" th:href="@{/categories/{id}/edit(id=${row.category.id})}">编辑</a>
+                        <form th:action="@{/categories/{id}/delete(id=${row.category.id})}" method="post"
+                              class="inline-form" onsubmit="return confirm('确认删除该分类？删除前会检查子分类与商品引用。');">
+                            <input type="hidden" name="_csrf" th:value="${_csrf}">
+                            <button type="submit" class="btn btn--danger btn--sm"
+                                    th:disabled="${row.childCount > 0 or row.productCount > 0}"
+                                    th:title="${row.childCount > 0 or row.productCount > 0} ? '存在子分类或商品引用，不能删除' : '删除分类'">
+                                删除
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(rows)}">
+                    <td colspan="8" class="empty-cell">暂无分类，请先新增一级分类。</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="note-card">
+        <h3>删除规则</h3>
+        <p>有子分类或仍被任意商品（包括下架商品）引用的分类不能删除。唯一性由数据库与业务校验共同保证：编码全局唯一，同一父分类下名称唯一。</p>
+    </section>
+</main>
+</body>
+</html>

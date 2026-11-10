@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('用户管理', ~{::content})}">
+<body>
+<main th:fragment="content" class="page-stack">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">MEMBERS · P1</p>
+            <h2>用户管理</h2>
+            <p class="muted">P1 选做：只查询普通会员并启用/禁用账号；不开放角色变更、管理员互禁或改密。</p>
+        </div>
+    </section>
+
+    <section class="card filter-card">
+        <form method="get" th:action="@{/users}" class="filter-form">
+            <label class="field field--compact">
+                <span>用户名</span>
+                <input type="text" name="username" maxlength="50" th:value="${username}" placeholder="按用户名包含查询">
+            </label>
+            <label class="field field--compact">
+                <span>状态</span>
+                <select name="status">
+                    <option value="">全部状态</option>
+                    <option th:each="s : ${statusOptions}"
+                            th:value="${s.name()}"
+                            th:text="${s.label}"
+                            th:selected="${status == s.name()}">启用</option>
+                </select>
+            </label>
+            <div class="filter-actions">
+                <button type="submit" class="btn btn--primary btn--sm">查询</button>
+                <a class="btn btn--ghost btn--sm" th:href="@{/users}">重置</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <div class="table-meta">
+            <span th:text="${'共 ' + pageResult.total() + ' 位普通会员'}">共 0 位普通会员</span>
+            <span class="muted" th:text="${'第 ' + pageResult.fromIndex() + '–' + pageResult.toIndex() + ' 条'}">第 0–0 条</span>
+        </div>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>用户名</th>
+                    <th>显示名称</th>
+                    <th>状态</th>
+                    <th>邮箱</th>
+                    <th>电话</th>
+                    <th>注册时间</th>
+                    <th class="actions-col">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row : ${pageResult.records()}">
+                    <td th:text="${row.id}">1</td>
+                    <td><code th:text="${row.username}">alice</code></td>
+                    <td th:text="${row.displayName}">林同学</td>
+                    <td>
+                        <span class="badge"
+                              th:classappend="${row.status.name() == 'ENABLED'} ? 'badge--green' : 'badge--danger'"
+                              th:text="${row.status.label}">启用</span>
+                    </td>
+                    <td th:text="${row.email != null ? row.email : '—'}">—</td>
+                    <td th:text="${row.phone != null ? row.phone : '—'}">—</td>
+                    <td th:text="${@fmt.dt(row.createdAt)}">—</td>
+                    <td class="actions">
+                        <form th:action="@{/users/{id}/status(id=${row.id})}" method="post" class="inline-form"
+                              onsubmit="return confirm('确认修改该会员的账号状态？');">
+                            <input type="hidden" name="_csrf" th:value="${_csrf}">
+                            <input type="hidden" name="target"
+                                   th:value="${row.status.name() == 'ENABLED'} ? 'DISABLED' : 'ENABLED'">
+                            <button type="submit" class="btn btn--sm"
+                                    th:classappend="${row.status.name() == 'ENABLED'} ? 'btn--danger' : 'btn--primary'"
+                                    th:text="${row.status.name() == 'ENABLED'} ? '禁用' : '启用'">禁用</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:if="${pageResult.isEmpty()}">
+                    <td colspan="8" class="empty-cell">没有符合条件的普通会员。</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:replace="~{fragments/pagination :: pager(${pageLinks})}"></div>
+    </section>
+
+    <section class="note-card">
+        <h3>启停规则</h3>
+        <p>禁用后，该会员下一次受保护请求会被用户端重新查库拒绝；管理端不会自动注销其浏览器会话。管理员账号不在此页列出，也不能通过此页修改角色或密码。</p>
+    </section>
+</main>
+</body>
+</html>

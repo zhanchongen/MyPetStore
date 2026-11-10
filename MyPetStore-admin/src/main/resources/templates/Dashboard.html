@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('控制台', ~{::content})}">
+<body>
+<main th:fragment="content" class="page-stack">
+    <section class="hero-card">
+        <div>
+            <p class="eyebrow">WELCOME BACK</p>
+            <h2>管理端控制台</h2>
+            <p class="muted" th:if="${currentAdmin != null}">
+                当前管理员：<strong th:text="${currentAdmin.displayName()}">管理员</strong>
+                <span th:text="${'（@' + currentAdmin.username() + '）'}">（@admin）</span>
+            </p>
+            <p class="muted">维护分类与商品、查看全站订单并完成发货。所有写操作都会校验登录身份、CSRF 与数据版本。</p>
+        </div>
+        <div class="hero-card__badge">ADMIN</div>
+    </section>
+
+    <section class="entry-grid">
+        <a class="entry-card" th:href="@{/categories}">
+            <span class="entry-card__icon">▤</span>
+            <h3>分类管理</h3>
+            <p>维护两级分类，检查父子关系与商品引用后再删除。</p>
+            <span class="entry-card__link">进入分类管理 →</span>
+        </a>
+        <a class="entry-card" th:href="@{/products}">
+            <span class="entry-card__icon">▦</span>
+            <h3>商品管理</h3>
+            <p>维护商品资料、上下架与增量补货，不提供删除和销量字段。</p>
+            <span class="entry-card__link">进入商品管理 →</span>
+        </a>
+        <a class="entry-card" th:href="@{/orders}">
+            <span class="entry-card__icon">▣</span>
+            <h3>订单管理</h3>
+            <p>按订单号与五状态查询全站订单，仅对待发货订单执行发货。</p>
+            <span class="entry-card__link">进入订单管理 →</span>
+        </a>
+        <a class="entry-card" th:href="@{/users}">
+            <span class="entry-card__icon">☺</span>
+            <h3>用户管理</h3>
+            <p>P1 选做：查询普通会员并启用/禁用账号，不开放角色变更。</p>
+            <span class="entry-card__link">进入用户管理 →</span>
+        </a>
+    </section>
+
+    <section class="note-card">
+        <h3>关于本页数据</h3>
+        <p>控制台只展示管理员身份与真实功能入口，不展示订单量、销售额、会员数、增长率、待审核或售后等演示统计，避免把原型假数据当成业务结果。</p>
+    </section>
+</main>
+</body>
+</html>

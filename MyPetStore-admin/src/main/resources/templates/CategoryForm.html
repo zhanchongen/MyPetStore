@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(${mode == 'create'} ? '新增分类' : '编辑分类', ~{::content})}">
+<body>
+<main th:fragment="content" class="page-stack">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">CATEGORY FORM</p>
+            <h2 th:text="${mode == 'create'} ? '新增分类' : '编辑分类'">新增分类</h2>
+            <p class="muted" th:text="${mode == 'create'} ? '可创建一级分类，或选择一个一级分类作为父分类创建二级分类。' : '编辑只修改名称与排序；编码和父子关系保持不变。'">说明</p>
+        </div>
+        <a class="btn btn--ghost" th:href="@{/categories}">← 返回列表</a>
+    </section>
+
+    <section class="card form-card">
+        <div class="flash flash--error" th:if="${error}" th:text="${error}">保存失败。</div>
+        <form th:action="${formAction}" method="post" class="admin-form">
+            <input type="hidden" name="_csrf" th:value="${_csrf}">
+            <input type="hidden" name="id" th:value="${form.id}" th:if="${mode == 'edit'}">
+
+            <div class="form-grid">
+                <label class="field">
+                    <span>分类编码 <em>*</em></span>
+                    <input type="text" name="code" maxlength="32" required
+                           th:value="${form.code}" th:readonly="${mode == 'edit'}"
+                           placeholder="例如 DOGS 或 DOG-FOOD">
+                    <small>全局唯一，最多 32 个字符；创建后不可修改。</small>
+                </label>
+
+                <label class="field">
+                    <span>分类名称 <em>*</em></span>
+                    <input type="text" name="name" maxlength="50" required
+                           th:value="${form.name}" placeholder="例如 犬类 / 狗粮">
+                    <small>最多 50 个字符；同一父分类下不能重名。</small>
+                </label>
+
+                <label class="field" th:if="${mode == 'create'}">
+                    <span>父分类</span>
+                    <select name="parentId">
+                        <option value="">无（创建一级分类）</option>
+                        <option th:each="parent : ${parents}"
+                                th:value="${parent.id}"
+                                th:text="${parent.name}"
+                                th:selected="${form.parentId != null and form.parentId == parent.id}">一级分类</option>
+                    </select>
+                    <small>选择一级分类后，将创建它的二级分类；不允许第三级。</small>
+                </label>
+
+                <div class="field" th:if="${mode == 'edit'}">
+                    <span>父分类</span>
+                    <p class="readonly-value" th:text="${parentName}">—</p>
+                    <small>父子关系创建后不可修改。</small>
+                </div>
+
+                <label class="field">
+                    <span>排序</span>
+                    <input type="number" name="sortOrder" min="0" step="1"
+                           th:value="${form.sortOrder}" placeholder="0">
+                    <small>非负整数，数值越小越靠前。</small>
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary"
+                        th:text="${mode == 'create'} ? '创建分类' : '保存修改'">保存</button>
+                <a class="btn btn--ghost" th:href="@{/categories}">取消</a>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

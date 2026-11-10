@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>管理端登录 · MyPetStore</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body class="login-body">
+<main class="login-page">
+    <section class="login-card">
+        <div class="login-brand">
+            <span class="login-brand__mark">MP</span>
+            <div>
+                <strong>MyPetStore</strong>
+                <small>管理端 · Administration</small>
+            </div>
+        </div>
+        <h1>管理员登录</h1>
+        <p class="login-lead">仅限已启用的管理员账号。普通会员请前往用户端登录。</p>
+
+        <div class="flash flash--error" th:if="${error}" th:text="${error}">登录失败。</div>
+        <div class="flash flash--success" th:if="${message}" th:text="${message}">提示。</div>
+
+        <form class="login-form" th:action="@{/login}" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf}">
+            <input type="hidden" name="returnUrl" th:value="${returnUrl}">
+            <label class="field">
+                <span>用户名</span>
+                <input type="text" name="username" autocomplete="username" required
+                       th:value="${username}" placeholder="请输入管理员账号">
+            </label>
+            <label class="field">
+                <span>密码</span>
+                <input type="password" name="password" autocomplete="current-password" required
+                       placeholder="请输入密码">
+            </label>
+            <button type="submit" class="btn btn--primary btn--block">进入管理端</button>
+        </form>
+
+        <p class="login-note">本页不使用验证码、记住登录或第三方登录；账号由初始化 SQL 提供。</p>
+    </section>
+    <p class="login-footer">MyPetStore · 软件开发架构平台实验一</p>
+</main>
+</body>
+</html>

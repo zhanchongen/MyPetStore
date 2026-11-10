@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('商品补货', ~{::content})}">
+<body>
+<main th:fragment="content" class="page-stack">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">RESTOCK</p>
+            <h2>增量补货</h2>
+            <p class="muted">在数据库最新库存上原子增加，不接收页面旧库存的绝对值。</p>
+        </div>
+        <a class="btn btn--ghost" th:href="@{/products/{id}/edit(id=${product.id})}">← 返回商品</a>
+    </section>
+
+    <section class="card form-card narrow-card">
+        <div class="flash flash--error" th:if="${error}" th:text="${error}">补货失败。</div>
+        <div class="product-summary">
+            <div>
+                <p class="eyebrow">PRODUCT</p>
+                <h3 th:text="${product.name}">商品名称</h3>
+                <p class="muted"><code th:text="${product.sku}">SKU</code> · 当前库存
+                    <strong th:text="${product.stock}">0</strong> 件</p>
+            </div>
+            <span class="badge"
+                  th:classappend="${product.status.name() == 'ON_SALE'} ? 'badge--green' : 'badge--muted'"
+                  th:text="${product.status.label}">上架</span>
+        </div>
+
+        <form th:action="@{/products/{id}/replenish(id=${form.id})}" method="post" class="admin-form">
+            <input type="hidden" name="_csrf" th:value="${_csrf}">
+            <input type="hidden" name="id" th:value="${form.id}">
+            <div class="form-grid">
+                <label class="field field--wide">
+                    <span>本次补货数量 <em>*</em></span>
+                    <input type="number" name="quantity" min="1" step="1" required
+                           th:value="${form.quantity}" placeholder="请输入正整数">
+                    <small>例如库存 10，用户购买 2 后补货 3，最终库存为 11。补货会同时递增商品版本。</small>
+                </label>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary">确认补货</button>
+                <a class="btn btn--ghost" th:href="@{/products/{id}/edit(id=${product.id})}">取消</a>
+            </div>
+        </form>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout('订单详情', ~{::content})}">
+<body>
+<main th:fragment="content" class="page-stack">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">ORDER DETAIL</p>
+            <h2 th:text="${'订单 ' + order.orderNo}">订单详情</h2>
+            <p class="muted">只读订单金额、明细与支付凭证；仅待发货订单允许发货。</p>
+        </div>
+        <a class="btn btn--ghost" th:href="@{/orders}">← 返回订单列表</a>
+    </section>
+
+    <section class="state-banner">
+        <div>
+            <p class="eyebrow">STATUS</p>
+            <h3 th:text="${order.status.label}">待支付</h3>
+            <p class="muted" th:text="${'所属会员：@' + (detail.user != null ? detail.user.username : '—')}">所属会员</p>
+        </div>
+        <form th:if="${order.status.name() == 'PAID'}"
+              th:action="@{/orders/{id}/ship(id=${order.id})}" method="post"
+              onsubmit="return confirm('确认对该订单发货？发货后将保存首次发货时间。');">
+            <input type="hidden" name="_csrf" th:value="${_csrf}">
+            <button type="submit" class="btn btn--primary">确认发货</button>
+        </form>
+        <span class="badge badge--muted" th:unless="${order.status.name() == 'PAID'}">当前不可发货</span>
+    </section>
+
+    <div class="detail-grid">
+        <section class="card">
+            <h3>订单信息</h3>
+            <dl class="info-list">
+                <dt>订单号</dt><dd><code th:text="${order.orderNo}">ORD...</code></dd>
+                <dt>订单状态</dt><dd th:text="${order.status.label}">待支付</dd>
+                <dt>所属会员</dt><dd th:text="${detail.user != null ? '@' + detail.user.username : '—'}">@alice</dd>
+                <dt>创建时间</dt><dd th:text="${@fmt.dt(order.createdAt)}">—</dd>
+                <dt>支付时间</dt><dd th:text="${order.paidAt != null ? @fmt.dt(order.paidAt) : '未支付'}">未支付</dd>
+                <dt>发货时间</dt><dd th:text="${order.shippedAt != null ? @fmt.dt(order.shippedAt) : '未发货'}">未发货</dd>
+                <dt>取消时间</dt><dd th:text="${order.cancelledAt != null ? @fmt.dt(order.cancelledAt) : '—'}">—</dd>
+            </dl>
+        </section>
+
+        <section class="card">
+            <h3>收货信息</h3>
+            <dl class="info-list">
+                <dt>收货人</dt><dd th:text="${order.receiverName}">收货人</dd>
+                <dt>联系电话</dt><dd th:text="${order.receiverPhone}">电话</dd>
+                <dt>收货地址</dt><dd th:text="${order.receiverAddress}">地址</dd>
+            </dl>
+        </section>
+
+        <section class="card">
+            <h3>支付记录（模拟）</h3>
+            <dl class="info-list">
+                <dt>支付方式</dt><dd th:text="${order.paymentMethod != null ? order.paymentMethod : '未支付'}">未支付</dd>
+                <dt>支付凭证</dt><dd><code th:text="${order.paymentNo != null ? order.paymentNo : '—'}">—</code></dd>
+                <dt>支付时间</dt><dd th:text="${order.paidAt != null ? @fmt.dt(order.paidAt) : '—'}">—</dd>
+            </dl>
+            <p class="muted form-hint">支付为课程演示的模拟结果，不对接真实支付网关，也不能由管理端修改。</p>
+        </section>
+
+        <section class="card amount-card">
+            <h3>订单金额</h3>
+            <p class="amount" th:text="${@money.format(order.totalAmount)}">¥0.00</p>
+            <p class="muted">金额由下单时的商品价格与数量计算，管理端不提供改价。</p>
+        </section>
+    </div>
+
+    <section class="card">
+        <h3>商品明细</h3>
+        <div class="table-wrap">
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>商品</th>
+                    <th>SKU 快照</th>
+                    <th class="num">单价</th>
+                    <th class="num">数量</th>
+                    <th class="num">小计</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${items}">
+                    <td>
+                        <div class="product-cell">
+                            <img th:src="${'/' + item.coverImageSnapshot}" alt="" width="48" height="48">
+                            <span th:text="${item.productNameSnapshot}">商品名称</span>
+                        </div>
+                    </td>
+                    <td><code th:text="${item.skuSnapshot}">SKU</code></td>
+                    <td class="num" th:text="${@money.format(item.unitPrice)}">¥0.00</td>
+                    <td class="num" th:text="${item.quantity}">1</td>
+                    <td class="num" th:text="${@money.format(item.lineAmount)}">¥0.00</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(items)}">
+                    <td colspan="5" class="empty-cell">订单没有明细。</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

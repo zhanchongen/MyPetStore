@@ -1,0 +1,11 @@
+<div th:fragment="pager(links)" class="pager" th:if="${links != null and links.pages().size() > 1}">
+    <a class="pager__link" th:if="${links.previousUrl() != null}" th:href="${links.previousUrl()}">上一页</a>
+    <span class="pager__pages">
+        <a th:each="p : ${links.pages()}"
+           class="pager__link"
+           th:classappend="${p.current()} ? 'is-current'"
+           th:href="${p.url()}"
+           th:text="${p.number()}">1</a>
+    </span>
+    <a class="pager__link" th:if="${links.nextUrl() != null}" th:href="${links.nextUrl()}">下一页</a>
+</div>

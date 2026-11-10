@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(${pageTitle}, ~{::content})}">
+<body>
+<main th:fragment="content" class="page-stack">
+    <section class="page-heading">
+        <div>
+            <p class="eyebrow">PRODUCT FORM</p>
+            <h2 th:text="${pageTitle}">商品表单</h2>
+            <p class="muted" th:text="${mode == 'create'} ? '新增商品默认下架，资料完善后可显式上架；初始库存只在新增时可填。' : 'SKU 与库存只读；保存时校验版本，冲突会提示刷新后重试。'">说明</p>
+        </div>
+        <a class="btn btn--ghost" th:href="@{/products}">← 返回列表</a>
+    </section>
+
+    <section class="card form-card">
+        <div class="flash flash--error" th:if="${error}" th:text="${error}">保存失败。</div>
+        <form th:action="${formAction}" method="post" class="admin-form">
+            <input type="hidden" name="_csrf" th:value="${_csrf}">
+            <input type="hidden" name="version" th:value="${form.version}" th:if="${mode == 'edit'}">
+
+            <div class="form-grid">
+                <label class="field">
+                    <span>SKU <em>*</em></span>
+                    <input type="text" name="sku" maxlength="40" required
+                           th:value="${form.sku}" th:readonly="${mode == 'edit'}"
+                           placeholder="例如 K9-BGL-03">
+                    <small>全局唯一，1—40 个字符；创建后不可修改。</small>
+                </label>
+
+                <label class="field">
+                    <span>商品名称 <em>*</em></span>
+                    <input type="text" name="name" maxlength="120" required
+                           th:value="${form.name}" placeholder="例如 牛肉味成犬粮 2kg">
+                    <small>1—120 个字符。</small>
+                </label>
+
+                <label class="field field--wide">
+                    <span>二级分类 <em>*</em></span>
+                    <select name="categoryId" required>
+                        <option value="">请选择二级分类</option>
+                        <optgroup th:each="top : ${topCategories}" th:label="${top.name}">
+                            <option th:each="c : ${secondCategories}"
+                                    th:if="${c.parentId == top.id}"
+                                    th:value="${c.id}"
+                                    th:text="${c.name}"
+                                    th:selected="${form.categoryId != null and form.categoryId == c.id}">二级分类</option>
+                        </optgroup>
+                    </select>
+                    <small>商品只能归属到已存在的二级分类；不允许挂在一级分类上。</small>
+                </label>
+
+                <label class="field">
+                    <span>价格（元） <em>*</em></span>
+                    <input type="number" name="price" min="0.01" step="0.01" required
+                           th:value="${form.price}" placeholder="0.00">
+                    <small>必须大于 0，最多两位小数。</small>
+                </label>
+
+                <label class="field" th:if="${mode == 'create'}">
+                    <span>初始库存 <em>*</em></span>
+                    <input type="number" name="stock" min="0" step="1" required
+                           th:value="${form.stock}" placeholder="0">
+                    <small>非负整数；上架后允许库存为 0（售罄）。</small>
+                </label>
+
+                <div class="field" th:if="${mode == 'edit'}">
+                    <span>当前库存</span>
+                    <p class="readonly-value" th:text="${product.stock}">0</p>
+                    <small>库存只能通过“补货”增量修改，编辑页不提交库存绝对值。</small>
+                </div>
+
+                <label class="field">
+                    <span>排序</span>
+                    <input type="number" name="sortOrder" min="0" step="1"
+                           th:value="${form.sortOrder}" placeholder="0">
+                    <small>非负整数，数值越小越靠前。</small>
+                </label>
+
+                <label class="field field--wide">
+                    <span>封面图片路径 <em>*</em></span>
+                    <input type="text" name="coverImage" maxlength="255" required
+                           th:value="${form.coverImage}" placeholder="images/pets/DOG-CORGI-26.svg">
+                    <small>站内静态资源路径，必须位于 images/ 下，最多 255 个字符。</small>
+                </label>
+
+                <label class="field field--wide">
+                    <span>商品简介</span>
+                    <textarea name="summary" rows="3" maxlength="500"
+                              th:text="${form.summary}" placeholder="最多 500 个字符"></textarea>
+                </label>
+
+                <label class="field field--wide">
+                    <span>商品描述</span>
+                    <textarea name="description" rows="6"
+                              th:text="${form.description}" placeholder="纯文本描述，页面会自动转义"></textarea>
+                    <small>管理端按纯文本保存，不做富文本或 HTML 渲染。</small>
+                </label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn--primary"
+                        th:text="${mode == 'create'} ? '创建商品' : '保存修改'">保存</button>
+                <a class="btn btn--ghost" th:href="@{/products}">取消</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="card status-card" th:if="${mode == 'edit'}">
+        <div class="status-card__main">
+            <div>
+                <p class="eyebrow">STATUS</p>
+                <h3>上下架</h3>
+                <p class="muted">当前状态：
+                    <span class="badge"
+                          th:classappend="${product.status.name() == 'ON_SALE'} ? 'badge--green' : 'badge--muted'"
+                          th:text="${product.status.label}">上架</span>
+                    上下架属于独立写操作，必须携带当前版本号。
+                </p>
+            </div>
+            <div class="status-card__actions">
+                <a class="btn btn--ghost" th:href="@{/products/{id}/replenish(id=${product.id})}">增量补货</a>
+                <form th:action="@{/products/{id}/status(id=${product.id})}" method="post" class="inline-form">
+                    <input type="hidden" name="_csrf" th:value="${_csrf}">
+                    <input type="hidden" name="version" th:value="${product.version}">
+                    <input type="hidden" name="back" th:value="@{/products/{id}/edit(id=${product.id})}">
+                    <input type="hidden" name="status"
+                           th:value="${product.status.name() == 'ON_SALE'} ? 'DRAFT' : 'ON_SALE'">
+                    <button type="submit" class="btn"
+                            th:classappend="${product.status.name() == 'ON_SALE'} ? 'btn--ghost' : 'btn--primary'"
+                            th:text="${product.status.name() == 'ON_SALE'} ? '下架商品' : '上架商品'">上架商品</button>
+                </form>
+            </div>
+        </div>
+        <p class="muted form-hint">上架前会再次检查价格、二级分类与封面；上架后库存可以为 0，页面显示“售罄”，不会自动下架。</p>
+    </section>
+</main>
+</body>
+</html>
