@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.csu.mypetstore.mapper.SalesOrderMapper">
+
+    <select id="selectUserPage" resultType="org.csu.mypetstore.dto.OrderRow">
+        SELECT o.id,
+               o.order_no AS orderNo,
+               o.status,
+               o.total_amount AS totalAmount,
+               o.created_at AS createdAt,
+               (SELECT COUNT(*) FROM sales_order_item i WHERE i.order_id = o.id) AS itemCount
+        FROM sales_order o
+        WHERE o.user_id = #{userId}
+        <if test="status != null">
+            AND o.status = #{status}
+        </if>
+        <if test="orderNo != null and orderNo != ''">
+            AND o.order_no = #{orderNo}
+        </if>
+        ORDER BY o.created_at DESC, o.id DESC
+    </select>
+
+    <select id="selectByIdForUpdate" resultType="org.csu.mypetstore.entity.SalesOrder">
+        SELECT *
+        FROM sales_order
+        WHERE id = #{id}
+        FOR UPDATE
+    </select>
+
+    <update id="updateToPaid">
+        UPDATE sales_order
+        SET status = 'PAID',
+            payment_method = 'MOCK',
+            payment_no = #{paymentNo},
+            paid_at = #{paidAt},
+            updated_at = #{updatedAt}
+        WHERE id = #{id}
+          AND status = 'PENDING_PAYMENT'
+    </update>
+
+    <update id="updateToCancelled">
+        UPDATE sales_order
+        SET status = 'CANCELLED',
+            cancelled_at = #{cancelledAt},
+            updated_at = #{updatedAt}
+        WHERE id = #{id}
+          AND status = 'PENDING_PAYMENT'
+    </update>
+
+    <update id="updateToShipped">
+        UPDATE sales_order
+        SET status = 'SHIPPED',
+            shipped_at = #{shippedAt},
+            updated_at = #{updatedAt}
+        WHERE id = #{id}
+          AND status = 'PAID'
+    </update>
+
+    <update id="updateToCompleted">
+        UPDATE sales_order
+        SET status = 'COMPLETED',
+            completed_at = #{completedAt},
+            updated_at = #{updatedAt}
+        WHERE id = #{id}
+          AND status = 'SHIPPED'
+    </update>
+</mapper>

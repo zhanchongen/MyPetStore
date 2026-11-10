@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.csu.mypetstore.mapper.ProductMapper">
+
+    <select id="selectUserPage" resultType="org.csu.mypetstore.dto.ProductCard">
+        SELECT p.id,
+               p.sku,
+               p.name,
+               p.summary,
+               p.cover_image AS coverImage,
+               p.price,
+               p.stock,
+               p.status,
+               c.name AS categoryName,
+               pc.name AS topCategoryName
+        FROM product p
+        JOIN category c ON c.id = p.category_id
+        JOIN category pc ON pc.id = c.parent_id
+        WHERE p.status = 'ON_SALE'
+        <if test="q.categoryIds != null and q.categoryIds.size() > 0">
+            AND p.category_id IN
+            <foreach collection="q.categoryIds" item="cid" open="(" separator="," close=")">
+                #{cid}
+            </foreach>
+        </if>
+        <if test="q.keyword != null and q.keyword != ''">
+            AND LOCATE(#{q.keyword}, p.name) &gt; 0
+        </if>
+        ORDER BY
+        <choose>
+            <when test="q.sort != null and q.sort.name() == 'PRICE_ASC'">
+                p.price ASC, p.id ASC
+            </when>
+            <when test="q.sort != null and q.sort.name() == 'PRICE_DESC'">
+                p.price DESC, p.id ASC
+            </when>
+            <when test="q.sort != null and q.sort.name() == 'NEWEST'">
+                p.created_at DESC, p.id DESC
+            </when>
+            <otherwise>
+                p.sort_order ASC, p.id ASC
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="selectHomeNew" resultType="org.csu.mypetstore.entity.Product">
+        SELECT *
+        FROM product
+        WHERE status = 'ON_SALE'
+        ORDER BY created_at DESC, id DESC
+        LIMIT #{limit}
+    </select>
+
+    <select id="selectHomeFeatured" resultType="org.csu.mypetstore.entity.Product">
+        SELECT *
+        FROM product
+        WHERE status = 'ON_SALE'
+        ORDER BY sort_order ASC, id ASC
+        LIMIT #{limit}
+    </select>
+
+    <select id="selectForUpdateByIds" resultType="org.csu.mypetstore.entity.Product">
+        SELECT *
+        FROM product
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        ORDER BY id
+        FOR UPDATE
+    </select>
+
+    <update id="decreaseStock">
+        UPDATE product
+        SET stock = stock - #{quantity},
+            version = version + 1
+        WHERE id = #{id}
+          AND status = 'ON_SALE'
+          AND stock &gt;= #{quantity}
+    </update>
+
+    <update id="increaseStock">
+        UPDATE product
+        SET stock = stock + #{quantity},
+            version = version + 1
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateInfoWithVersion">
+        UPDATE product
+        SET category_id = #{p.categoryId},
+            name = #{p.name},
+            summary = #{p.summary},
+            description = #{p.description},
+            cover_image = #{p.coverImage},
+            price = #{p.price},
+            sort_order = #{p.sortOrder},
+            version = version + 1
+        WHERE id = #{p.id}
+          AND version = #{p.version}
+    </update>
+
+    <update id="updateStatusWithVersion">
+        UPDATE product
+        SET status = #{status},
+            version = version + 1
+        WHERE id = #{id}
+          AND version = #{version}
+    </update>
+</mapper>

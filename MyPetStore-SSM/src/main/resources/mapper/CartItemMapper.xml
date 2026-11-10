@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.csu.mypetstore.mapper.CartItemMapper">
+
+    <select id="selectLinesByUser" resultType="org.csu.mypetstore.dto.CartLine">
+        SELECT ci.id AS itemId,
+               ci.product_id AS productId,
+               ci.quantity,
+               ci.version,
+               p.sku,
+               p.name,
+               p.cover_image AS coverImage,
+               p.price,
+               p.stock,
+               p.status,
+               (p.price * ci.quantity) AS lineAmount
+        FROM cart_item ci
+        JOIN product p ON p.id = ci.product_id
+        WHERE ci.user_id = #{userId}
+        ORDER BY ci.created_at, ci.id
+    </select>
+
+    <select id="selectByUserAndProductForUpdate" resultType="org.csu.mypetstore.entity.CartItem">
+        SELECT *
+        FROM cart_item
+        WHERE user_id = #{userId}
+          AND product_id = #{productId}
+        FOR UPDATE
+    </select>
+
+    <select id="selectByIdAndUser" resultType="org.csu.mypetstore.entity.CartItem">
+        SELECT *
+        FROM cart_item
+        WHERE id = #{id}
+          AND user_id = #{userId}
+    </select>
+
+    <select id="selectByUserForUpdate" resultType="org.csu.mypetstore.entity.CartItem">
+        SELECT *
+        FROM cart_item
+        WHERE user_id = #{userId}
+        ORDER BY product_id
+        FOR UPDATE
+    </select>
+
+    <select id="sumQuantityByUser" resultType="int">
+        SELECT COALESCE(SUM(quantity), 0)
+        FROM cart_item
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="countByUser" resultType="int">
+        SELECT COUNT(*)
+        FROM cart_item
+        WHERE user_id = #{userId}
+    </select>
+
+    <update id="updateQuantityWithVersion">
+        UPDATE cart_item
+        SET quantity = #{quantity},
+            version = version + 1
+        WHERE id = #{id}
+          AND user_id = #{userId}
+          AND version = #{version}
+    </update>
+
+    <delete id="deleteByIdAndUser">
+        DELETE FROM cart_item
+        WHERE id = #{id}
+          AND user_id = #{userId}
+          AND version = #{version}
+    </delete>
+
+    <delete id="deleteByIdsAndUser">
+        DELETE FROM cart_item
+        WHERE user_id = #{userId}
+          AND id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,11 @@
+spring:
+  thymeleaf:
+    cache: false
+  web:
+    resources:
+      cache:
+        period: 0
+
+logging:
+  level:
+    org.csu.mypetstore: DEBUG
