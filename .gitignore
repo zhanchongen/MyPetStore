@@ -1,0 +1,41 @@
+# ===== 构建与运行产物 =====
+**/target/
+*.class
+*.log
+*.pid
+hs_err_pid*
+
+# ===== IDE / 系统 =====
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+.settings/
+.classpath
+.project
+.DS_Store
+Thumbs.db
+
+# ===== 本地工具与临时文件（不入库）=====
+.tools/
+.tmp-docs/
+.dsh-office-*/
+*.local
+
+# ===== 本地配置与密钥 =====
+application-local.yaml
+application-local.yml
+.env
+.env.*
+*.pem
+*.p12
+*.jks
+
+# ===== 课程原始材料（仓库只提交 database/ 下的副本）=====
+/Video_*.mp4
+/MyPetStore-PRD.pdf
+/《软件开发架构平台》实验指导书2025级_实验一.doc
+/MyPetstore用户端参考UI.zip
+/01-schema.sql
+/02-schema-with-demo.sql
