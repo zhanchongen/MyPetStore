@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('个人资料')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('profile')}"></header>
+
+<main class="page-section">
+    <div class="cart-main">
+        <section class="page-section__head">
+            <div>
+                <span class="eyebrow">MY PROFILE</span>
+                <h1>个人资料</h1>
+                <p>更新展示名称、邮箱和电话；用户名与角色不可在此修改。</p>
+            </div>
+            <a class="btn btn--ghost" th:href="@{/profile/password}">修改密码</a>
+        </section>
+
+        <div class="profile-layout">
+            <section class="panel">
+                <h2>编辑资料</h2>
+                <form class="form-grid" th:object="${form}" th:action="@{/profile}" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf}">
+                    <p class="flash flash--error" th:if="${#fields.hasGlobalErrors()}" th:each="err : ${#fields.globalErrors()}" th:text="${err}">资料更新失败</p>
+                    <label class="field">
+                        <span>展示名称</span>
+                        <input type="text" th:field="*{displayName}" maxlength="50" placeholder="请输入展示名称" required>
+                        <small class="field-error" th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}">展示名称不合法</small>
+                    </label>
+                    <label class="field">
+                        <span>邮箱</span>
+                        <input type="email" th:field="*{email}" maxlength="100" placeholder="name@example.com">
+                        <small class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">邮箱格式不正确</small>
+                    </label>
+                    <label class="field">
+                        <span>电话</span>
+                        <input type="text" th:field="*{phone}" maxlength="30" placeholder="选填">
+                        <small class="field-error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">电话不合法</small>
+                    </label>
+                    <div class="checkout-submit">
+                        <button type="submit" class="btn btn--primary">保存资料</button>
+                        <a class="btn btn--ghost" th:href="@{/main}">返回商城</a>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="panel">
+                <h2>账号信息</h2>
+                <div class="order-info-card">
+                    <dl>
+                        <div><dt>用户名</dt><dd th:text="${user.username}">username</dd></div>
+                        <div><dt>角色</dt><dd th:text="${user.role.label}">顾客</dd></div>
+                        <div><dt>账号状态</dt><dd th:text="${user.status.label}">正常</dd></div>
+                        <div><dt>注册时间</dt><dd th:text="${@fmt.dt(user.createdAt)}">时间</dd></div>
+                    </dl>
+                </div>
+                <p class="checkout-note">资料修改会同步更新当前登录会话中的展示名称；邮箱和电话仅用于本实验演示。</p>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

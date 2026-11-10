@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>服务暂时不可用 | MyPetStore</title>
+    <link rel="stylesheet" th:href="@{/css/jpetstore.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="error-page">
+<main class="error-card">
+    <div class="error-card__code" th:text="${status != null ? status : 500}">500</div>
+    <h1>服务暂时不可用</h1>
+    <p th:text="${message != null ? message : '请稍后重试；如果问题持续出现，请联系课程助教。'}">请稍后重试。</p>
+    <div class="error-card__actions">
+        <a class="btn btn--primary" th:href="@{/main}">返回首页</a>
+        <a class="btn btn--ghost" th:href="@{/category}">去选购</a>
+    </div>
+</main>
+</body>
+</html>

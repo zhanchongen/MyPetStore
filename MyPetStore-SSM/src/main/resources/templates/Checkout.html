@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('确认订单')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('cart')}"></header>
+
+<main class="cart-page">
+    <div class="cart-main">
+        <section class="cart-intro">
+            <div>
+                <span class="eyebrow">CHECKOUT</span>
+                <h1>确认订单</h1>
+                <p>请确认收货信息与商品清单。提交后会创建订单并进入模拟支付。</p>
+            </div>
+            <ol class="cart-steps">
+                <li>购物车</li>
+                <li class="is-active">确认订单</li>
+                <li>模拟支付</li>
+            </ol>
+        </section>
+
+        <div class="checkout-layout">
+            <section class="panel">
+                <h2>收货信息</h2>
+                <form class="form-grid" th:object="${form}" th:action="@{/checkout/submit}" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf}">
+                    <label class="field">
+                        <span>收货人</span>
+                        <input type="text" th:field="*{receiverName}" maxlength="50" placeholder="请输入收货人姓名" required>
+                        <small class="field-error" th:if="${#fields.hasErrors('receiverName')}" th:errors="*{receiverName}">收货人不能为空</small>
+                    </label>
+                    <label class="field">
+                        <span>联系电话</span>
+                        <input type="text" th:field="*{receiverPhone}" maxlength="30" placeholder="请输入联系电话" required>
+                        <small class="field-error" th:if="${#fields.hasErrors('receiverPhone')}" th:errors="*{receiverPhone}">联系电话不能为空</small>
+                    </label>
+                    <label class="field">
+                        <span>收货地址</span>
+                        <textarea th:field="*{receiverAddress}" maxlength="255" placeholder="请输入详细收货地址" required></textarea>
+                        <small class="field-error" th:if="${#fields.hasErrors('receiverAddress')}" th:errors="*{receiverAddress}">收货地址不能为空</small>
+                    </label>
+                    <p class="checkout-note">提交订单时会再次校验商品价格与库存；若期间发生变价或库存变化，会提示重新确认。</p>
+                    <div class="checkout-submit">
+                        <a class="btn btn--ghost" th:href="@{/cart}">返回购物车</a>
+                        <button type="submit" class="btn btn--primary">提交订单</button>
+                    </div>
+                </form>
+            </section>
+
+            <aside class="panel">
+                <h2>订单摘要</h2>
+                <div class="checkout-lines">
+                    <div class="checkout-line" th:each="line : ${confirm.lines()}">
+                        <img th:src="${line.coverImage() != null ? '/' + line.coverImage() : '/images/logo.png'}"
+                             th:alt="${line.productName()}">
+                        <div>
+                            <b th:text="${line.productName()}">商品名称</b>
+                            <small th:text="'SKU：' + ${line.sku()}">SKU</small>
+                            <small th:text="'数量 × ' + ${line.quantity()}">数量</small>
+                        </div>
+                        <div class="checkout-line__price">
+                            <b class="money" th:text="${@money.format(line.unitPrice())}">¥0.00</b>
+                            <small th:text="'小计 ' + ${@money.format(line.lineAmount())}">小计</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="summary-row"><span>商品数量</span><strong th:text="${confirm.totalQuantity()} + ' 件'">0 件</strong></div>
+                <div class="summary-row"><span>商品金额</span><strong class="money" th:text="${@money.format(confirm.totalAmount())}">¥0.00</strong></div>
+                <div class="summary-total"><span>应付合计</span><strong class="money" th:text="${@money.format(confirm.totalAmount())}">¥0.00</strong></div>
+                <p class="checkout-note">不需要运费、优惠券或地址簿；本实验只保留商品金额。</p>
+                <p class="checkout-note" th:if="${confirm.createdAt() != null}">
+                    确认时间：<span th:text="${@fmt.dt(confirm.createdAt())}">时间</span>
+                </p>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

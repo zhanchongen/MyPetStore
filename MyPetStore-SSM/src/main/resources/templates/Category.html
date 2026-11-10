@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('选购商品')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('catalog')}"></header>
+
+<main class="catalog-page">
+    <div class="catalog-shell">
+        <div class="catalog-main">
+            <section class="catalog-intro">
+                <div>
+                    <span class="eyebrow">SHOP BY CATEGORY</span>
+                    <h1 th:text="${title}">全部商品</h1>
+                    <p>按分类、商品类型或名称查找，价格与库存实时来自数据库。</p>
+                </div>
+                <div class="catalog-count">
+                    <strong th:text="${pageResult.total()}">0</strong>
+                    <span>件商品</span>
+                </div>
+            </section>
+
+            <nav class="catalog-mobile-categories" aria-label="一级分类">
+                <a th:href="@{/category}" th:classappend="${search.topCategoryId() == null ? ' is-active' : ''}">全部</a>
+                <a th:each="c : ${topCategories}" th:href="@{/category(categoryId=${c.id})}"
+                   th:text="${c.name}"
+                   th:classappend="${search.topCategoryId() != null and search.topCategoryId() == c.id ? ' is-active' : ''}">分类</a>
+            </nav>
+
+            <div class="catalog-layout">
+                <aside class="catalog-sidebar">
+                    <section class="catalog-category-list">
+                        <h2>商品分类</h2>
+                        <a th:href="@{/category}" th:classappend="${search.topCategoryId() == null ? ' is-active' : ''}">
+                            <span>全部商品</span>
+                        </a>
+                        <a th:each="c : ${topCategories}" th:href="@{/category(categoryId=${c.id})}"
+                           th:classappend="${search.topCategoryId() != null and search.topCategoryId() == c.id ? ' is-active' : ''}">
+                            <span th:text="${c.name}">分类</span>
+                        </a>
+                    </section>
+
+                    <section class="catalog-subcategories" th:if="${!#lists.isEmpty(secondCategories)}">
+                        <h2>二级分类</h2>
+                        <a th:each="sc : ${secondCategories}" th:href="@{/category(categoryId=${sc.id})}"
+                           th:text="${sc.name}"
+                           th:classappend="${search.secondCategory() != null and search.secondCategory().id == sc.id ? ' is-active' : ''}">小类</a>
+                    </section>
+
+                    <section class="catalog-promise">
+                        <h2>购物说明</h2>
+                        <p>所有写操作均使用 POST；登录后才能加入购物车、结算与查看订单。</p>
+                        <p>支付为课程实验的模拟流程，不会产生真实扣款。</p>
+                    </section>
+                </aside>
+
+                <section class="catalog-results">
+                    <div class="catalog-toolbar">
+                        <div class="catalog-filters" role="group" aria-label="商品类型">
+                            <a th:each="t : ${typeOptions}"
+                               th:href="@{/category(categoryId=${search.topCategoryId()}, productType=${t.name()}, sort=${search.sort().name()}, keyword=${search.keyword()})}"
+                               th:text="${t.label}"
+                               th:classappend="${search.type() == t ? ' is-active' : ''}">全部</a>
+                        </div>
+                        <form class="catalog-sort" th:action="@{/category}" method="get">
+                            <input type="hidden" name="categoryId" th:value="${search.topCategoryId()}">
+                            <input type="hidden" name="productType" th:value="${search.type().name()}">
+                            <input type="hidden" name="keyword" th:value="${search.keyword()}">
+                            <label for="sort">排序</label>
+                            <select id="sort" name="sort" onchange="this.form.submit()">
+                                <option th:each="s : ${sortOptions}" th:value="${s.name()}" th:text="${s.label}"
+                                        th:selected="${s == search.sort()}">默认排序</option>
+                            </select>
+                            <noscript><button type="submit" class="btn btn--sm">应用</button></noscript>
+                        </form>
+                    </div>
+
+                    <div class="catalog-active-filters" th:if="${!#strings.isEmpty(keyword)}">
+                        <span>关键词：<b th:text="${keyword}">关键词</b></span>
+                        <a th:href="@{/category(categoryId=${search.topCategoryId()}, productType=${search.type().name()}, sort=${search.sort().name()})}">清除关键词</a>
+                    </div>
+
+                    <div class="catalog-product-grid" th:if="${!pageResult.isEmpty()}">
+                        <article class="catalog-product-card" th:each="p : ${pageResult.records()}"
+                                 th:with="img=${p.coverImage != null ? '/' + p.coverImage : '/images/logo.png'}"
+                                 th:classappend="${p.isSoldOut() ? ' is-sold-out' : ''}">
+                            <a class="catalog-product-card__media" th:href="@{/product/{id}(id=${p.id})}">
+                                <img th:src="${img}" th:alt="${p.name}" loading="lazy">
+                                <span class="catalog-label" th:text="${p.topCategoryName}">分类</span>
+                            </a>
+                            <div class="catalog-product-card__body">
+                                <div class="catalog-product-card__meta">
+                                    <span th:text="${p.sku}">SKU</span>
+                                    <span th:class="${p.isSoldOut() ? 'stock-out' : (p.stock <= 5 ? 'stock-low' : 'stock-ok')}"
+                                          th:text="${p.isSoldOut() ? '暂时售罄' : (p.stock <= 5 ? '仅剩 ' + p.stock + ' 件' : '现货')}">现货</span>
+                                </div>
+                                <h2><a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">商品名称</a></h2>
+                                <p th:text="${p.summary}">商品简介</p>
+                                <div class="catalog-product-card__bottom">
+                                    <strong class="money" th:text="${@money.format(p.price)}">¥0.00</strong>
+                                    <a class="catalog-buy" th:href="@{/product/{id}(id=${p.id})}">查看详情</a>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="empty-state" th:if="${pageResult.isEmpty()}">
+                        <h2>没有找到符合条件的商品</h2>
+                        <p th:if="${!#strings.isEmpty(keyword)}">试试更换关键词，或清除筛选条件。</p>
+                        <p th:if="${#strings.isEmpty(keyword)}">当前分类暂时没有可售商品。</p>
+                        <a th:href="@{/category}">查看全部商品</a>
+                    </div>
+
+                    <nav class="catalog-pagination pager" th:if="${pageResult.pages() > 1}" aria-label="分页">
+                        <a th:if="${pageResult.hasPrevious()}" th:href="${pageLinks.previousUrl()}">上一页</a>
+                        <span class="is-disabled" th:unless="${pageResult.hasPrevious()}">上一页</span>
+                        <a th:each="link : ${pageLinks.pages()}" th:href="${link.url()}" th:text="${link.number()}"
+                           th:classappend="${link.current() ? ' is-current' : ''}">1</a>
+                        <a th:if="${pageResult.hasNext()}" th:href="${pageLinks.nextUrl()}">下一页</a>
+                        <span class="is-disabled" th:unless="${pageResult.hasNext()}">下一页</span>
+                    </nav>
+                    <p class="catalog-pagination-note" th:if="${!pageResult.isEmpty()}">
+                        共 <b th:text="${pageResult.total()}">0</b> 件，当前显示
+                        <b th:text="${pageResult.fromIndex()}">1</b>–<b th:text="${pageResult.toIndex()}">6</b>
+                    </p>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

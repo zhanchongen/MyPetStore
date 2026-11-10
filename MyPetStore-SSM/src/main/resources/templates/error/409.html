@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>数据已变化 | MyPetStore</title>
+    <link rel="stylesheet" th:href="@{/css/jpetstore.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="error-page">
+<main class="error-card">
+    <div class="error-card__code" th:text="${status != null ? status : 409}">409</div>
+    <h1>数据已发生变化</h1>
+    <p th:text="${message != null ? message : '商品价格、库存或购物车已变化，请重新确认后再提交。'}">请重新确认。</p>
+    <div class="error-card__actions">
+        <a class="btn btn--primary" th:href="@{/cart}">返回购物车</a>
+        <a class="btn btn--ghost" th:href="@{/main}">返回首页</a>
+    </div>
+</main>
+</body>
+</html>

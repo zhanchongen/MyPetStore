@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('首页')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('home')}"></header>
+
+<main class="home-main">
+    <section class="home-hero">
+        <div class="home-hero__veil"></div>
+        <div class="home-hero__content">
+            <span class="eyebrow">MY PETSTORE · 宠物生活优选</span>
+            <h1>把认真挑选的陪伴，<br>带回家。</h1>
+            <p>宠物与用品两大类，按分类、名称或 SKU 快速找到合适的商品。价格透明，库存实时可见。</p>
+            <div class="home-hero__actions">
+                <a class="home-primary" th:href="@{/category}">开始选购 <span>→</span></a>
+                <a class="home-ghost" th:href="@{/category(sort='NEWEST')}">看看新品</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="category-strip" th:if="${!#lists.isEmpty(home.categories())}">
+        <a class="category-strip__item" th:each="node : ${home.categories()}"
+           th:with="c=${node.category()}"
+           th:href="@{/category(categoryId=${c.id})}">
+            <span class="category-icon" th:text="${node.icon()}">🐾</span>
+            <strong th:text="${c.name}">分类</strong>
+            <small th:text="${#lists.size(node.children())} + ' 个小类'">小类</small>
+        </a>
+    </section>
+
+    <section class="home-section" id="new">
+        <div class="home-section__head">
+            <div>
+                <span class="eyebrow">NEW ARRIVALS</span>
+                <h2>刚刚上架</h2>
+            </div>
+            <a class="home-section__more" th:href="@{/category(sort='NEWEST')}">查看全部 <span>→</span></a>
+        </div>
+        <div class="new-grid" th:if="${!#lists.isEmpty(home.newArrivals())}">
+            <article class="feature-product" th:each="p : ${home.newArrivals()}"
+                     th:with="img=${p.coverImage != null ? '/' + p.coverImage : '/images/logo.png'}">
+                <a class="feature-product__media" th:href="@{/product/{id}(id=${p.id})}">
+                    <img th:src="${img}" th:alt="${p.name}">
+                </a>
+                <div class="feature-product__body">
+                    <span class="catalog-label" th:text="${p.sku}">SKU</span>
+                    <h3><a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">商品名称</a></h3>
+                    <p th:text="${p.summary}">商品简介</p>
+                    <div class="feature-product__bottom">
+                        <strong class="money" th:text="${@money.format(p.price)}">¥0.00</strong>
+                        <a class="catalog-buy" th:href="@{/product/{id}(id=${p.id})}">查看详情</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="empty-state" th:if="${#lists.isEmpty(home.newArrivals())}">
+            <h2>暂时没有新品</h2>
+            <p>可以先去全部商品里逛逛。</p>
+        </div>
+    </section>
+
+    <section class="home-section">
+        <div class="home-section__head">
+            <div>
+                <span class="eyebrow">CURATED FOR YOU</span>
+                <h2>精选推荐</h2>
+            </div>
+            <a class="home-section__more" th:href="@{/category}">全部商品 <span>→</span></a>
+        </div>
+        <div class="new-list" th:if="${!#lists.isEmpty(home.featured())}">
+            <article class="feature-product" th:each="p : ${home.featured()}"
+                     th:with="img=${p.coverImage != null ? '/' + p.coverImage : '/images/logo.png'}">
+                <a class="feature-product__media" th:href="@{/product/{id}(id=${p.id})}">
+                    <img th:src="${img}" th:alt="${p.name}">
+                </a>
+                <div class="feature-product__body">
+                    <span class="catalog-label" th:text="${p.sku}">SKU</span>
+                    <h3><a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">商品名称</a></h3>
+                    <p th:text="${p.summary}">商品简介</p>
+                    <div class="feature-product__bottom">
+                        <strong class="money" th:text="${@money.format(p.price)}">¥0.00</strong>
+                        <a class="catalog-buy" th:href="@{/product/{id}(id=${p.id})}">查看详情</a>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="empty-state" th:if="${#lists.isEmpty(home.featured())}">
+            <h2>精选商品准备中</h2>
+            <p>先去全部商品里看看吧。</p>
+        </div>
+    </section>
+
+    <section class="quality-banner">
+        <div>
+            <span class="eyebrow">MY PETSTORE PROMISE</span>
+            <h2>认真挑选，也认真说明。</h2>
+            <p>商品价格、库存和状态均来自数据库；订单与支付为课程实验的模拟流程，不会产生真实扣款。</p>
+        </div>
+        <a class="home-primary" th:href="@{/category}">进入商城</a>
+    </section>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

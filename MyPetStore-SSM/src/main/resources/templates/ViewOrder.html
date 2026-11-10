@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('订单详情')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('orders')}"></header>
+
+<main class="order-detail-page">
+    <div class="order-detail-main">
+        <nav class="order-detail-breadcrumb" aria-label="面包屑">
+            <a th:href="@{/main}">首页</a><span>/</span>
+            <a th:href="@{/orders}">我的订单</a><span>/</span>
+            <span th:text="${order.orderNo}">订单号</span>
+        </nav>
+
+        <section class="order-state-banner"
+                 th:classappend="${' order-status--' + #strings.toLowerCase(order.status.name())}">
+            <div>
+                <span class="eyebrow">ORDER STATUS</span>
+                <h1 th:switch="${order.status.name()}">
+                    <span th:case="'PENDING_PAYMENT'">订单等待支付</span>
+                    <span th:case="'PAID'">订单已支付，等待发货</span>
+                    <span th:case="'SHIPPED'">订单已发货</span>
+                    <span th:case="'COMPLETED'">订单已完成</span>
+                    <span th:case="'CANCELLED'">订单已取消</span>
+                    <span th:case="*">订单状态</span>
+                </h1>
+                <p>订单号 <b th:text="${order.orderNo}">ORDER</b> · 下单时间
+                    <span th:text="${@fmt.dt(order.createdAt)}">时间</span></p>
+            </div>
+            <div class="order-state-banner__actions">
+                <a class="btn btn--sm" th:if="${order.status.canPay()}" th:href="@{/payment/{id}(id=${order.id})}">去模拟支付</a>
+                <form th:if="${order.status.canCancel()}" th:action="@{/orders/{id}/cancel(id=${order.id})}" method="post"
+                      data-confirm="取消后库存会恢复，确定取消这个订单吗？">
+                    <input type="hidden" name="_csrf" th:value="${_csrf}">
+                    <button type="submit" class="btn btn--sm btn--danger">取消订单</button>
+                </form>
+                <form th:if="${order.status.canComplete()}" th:action="@{/orders/{id}/complete(id=${order.id})}" method="post"
+                      data-confirm="确认已经收到商品了吗？">
+                    <input type="hidden" name="_csrf" th:value="${_csrf}">
+                    <button type="submit" class="btn btn--sm btn--primary">确认收货</button>
+                </form>
+            </div>
+        </section>
+
+        <div class="order-detail-layout">
+            <div class="order-detail-content">
+                <section class="order-address-card panel">
+                    <h2>收货信息</h2>
+                    <p><b th:text="${order.receiverName}">收货人</b> · <span th:text="${order.receiverPhone}">电话</span></p>
+                    <p th:text="${order.receiverAddress}">地址</p>
+                    <small>下单时保存的收货快照，本实验不提供地址簿编辑。</small>
+                </section>
+
+                <section class="order-products panel">
+                    <h2>商品明细</h2>
+                    <div class="order-product-row" th:each="item : ${items}">
+                        <a th:href="@{/product/{id}(id=${item.productId})}">
+                            <img th:src="${item.coverImageSnapshot != null ? '/' + item.coverImageSnapshot : '/images/logo.png'}"
+                                 th:alt="${item.productNameSnapshot}">
+                        </a>
+                        <div>
+                            <h2><a th:href="@{/product/{id}(id=${item.productId})}" th:text="${item.productNameSnapshot}">商品名称</a></h2>
+                            <p th:text="'SKU：' + ${item.skuSnapshot}">SKU</p>
+                            <small th:text="'单价 ' + ${@money.format(item.unitPrice)} + ' × ' + ${item.quantity}">单价 × 数量</small>
+                        </div>
+                        <div class="order-product-row__amount">
+                            <strong class="money" th:text="${@money.format(item.lineAmount)}">¥0.00</strong>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="order-detail-side">
+                <section class="order-info-card panel">
+                    <h2>订单信息</h2>
+                    <dl>
+                        <div><dt>订单号</dt><dd th:text="${order.orderNo}">ORDER</dd></div>
+                        <div><dt>订单状态</dt><dd th:text="${order.status.label}">状态</dd></div>
+                        <div><dt>下单时间</dt><dd th:text="${@fmt.dt(order.createdAt)}">时间</dd></div>
+                        <div th:if="${order.paidAt != null}"><dt>支付时间</dt><dd th:text="${@fmt.dt(order.paidAt)}">时间</dd></div>
+                        <div th:if="${order.shippedAt != null}"><dt>发货时间</dt><dd th:text="${@fmt.dt(order.shippedAt)}">时间</dd></div>
+                        <div th:if="${order.completedAt != null}"><dt>完成时间</dt><dd th:text="${@fmt.dt(order.completedAt)}">时间</dd></div>
+                        <div th:if="${order.cancelledAt != null}"><dt>取消时间</dt><dd th:text="${@fmt.dt(order.cancelledAt)}">时间</dd></div>
+                    </dl>
+                </section>
+
+                <section class="order-info-card panel" th:if="${order.paymentNo != null}">
+                    <h2>模拟支付记录</h2>
+                    <dl>
+                        <div><dt>支付方式</dt><dd th:text="${order.paymentMethod}">MOCK</dd></div>
+                        <div><dt>支付凭证</dt><dd th:text="${order.paymentNo}">凭证</dd></div>
+                    </dl>
+                    <p class="checkout-note">这是课程实验的模拟支付记录，不对应任何真实资金流转。</p>
+                </section>
+
+                <section class="order-cost-card panel">
+                    <h2>金额</h2>
+                    <div class="summary-row"><span>商品金额</span><strong class="money" th:text="${@money.format(order.totalAmount)}">¥0.00</strong></div>
+                    <div class="summary-row"><span>运费 / 优惠</span><strong>无</strong></div>
+                    <div class="summary-total"><span>订单合计</span><strong class="money" th:text="${@money.format(order.totalAmount)}">¥0.00</strong></div>
+                </section>
+            </aside>
+        </div>
+
+        <div class="order-detail-actions">
+            <a class="btn btn--ghost" th:href="@{/orders}">← 返回订单列表</a>
+            <a class="btn btn--ghost" th:href="@{/category}">继续选购</a>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

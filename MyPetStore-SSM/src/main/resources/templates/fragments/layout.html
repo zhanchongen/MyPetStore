@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' | MyPetStore'">MyPetStore</title>
+    <link rel="icon" type="image/png" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/jpetstore.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+
+<header th:fragment="header(active)" class="site-header home-header">
+    <div class="site-header__top">
+        <a class="brand" th:href="@{/main}">
+            <span class="brand__badge"><img th:src="@{/images/logo.png}" alt="MyPetStore Logo"></span>
+            <span><b>MyPetStore</b><small>陪它好好生活</small></span>
+        </a>
+        <nav class="top-actions" aria-label="主导航">
+            <a class="nav-link" th:classappend="${active == 'home' ? ' is-active' : ''}" th:href="@{/main}">首页</a>
+            <a class="nav-link" th:classappend="${active == 'catalog' ? ' is-active' : ''}" th:href="@{/category}">选购</a>
+            <a class="nav-link" th:classappend="${active == 'orders' ? ' is-active' : ''}"
+               th:if="${currentUser != null}" th:href="@{/orders}">订单</a>
+            <a class="nav-link" th:if="${currentUser == null}" th:href="@{/login(returnUrl='/orders')}">订单</a>
+            <a class="nav-link" th:classappend="${active == 'profile' ? ' is-active' : ''}"
+               th:if="${currentUser != null}" th:href="@{/profile}">我的</a>
+            <a class="nav-link" th:if="${currentUser == null}" th:href="@{/login}">我的</a>
+            <a class="cart-link" th:href="@{/cart}"><span>购物车</span><b th:text="${cartCount}">0</b></a>
+            <form th:if="${currentUser != null}" class="logout-form" th:action="@{/logout}" method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf}">
+                <button type="submit" class="nav-link nav-button">退出</button>
+            </form>
+        </nav>
+    </div>
+    <div class="search-row home-search">
+        <form th:action="@{/category}" method="get">
+            <span class="search-icon" aria-hidden="true"></span>
+            <input type="text" name="keyword" placeholder="搜索商品名称或 SKU" autocomplete="off">
+            <input type="submit" value="搜索">
+        </form>
+        <a class="member-link" th:if="${currentUser == null}" th:href="@{/login}">会员登录 <span>→</span></a>
+        <a class="member-link" th:if="${currentUser != null}" th:href="@{/profile}">
+            <span th:text="${currentUser.displayName}">会员</span> <span>→</span>
+        </a>
+    </div>
+    <div class="flash-stack" th:if="${message != null or error != null}">
+        <div class="flash flash--success" th:if="${message != null}" th:text="${message}"></div>
+        <div class="flash flash--error" th:if="${error != null}" th:text="${error}"></div>
+    </div>
+</header>
+
+<footer th:fragment="footer" class="site-footer home-footer">
+    <a class="brand" th:href="@{/main}">
+        <span class="brand__badge"><img th:src="@{/images/logo.png}" alt=""></span>MyPetStore
+    </a>
+    <p>认真挑选每一份陪伴。</p>
+    <span>© 2026 MyPetStore · 课程实验项目 · 演示数据</span>
+    <script th:src="@{/js/app.js}" defer></script>
+</footer>
+
+</body>
+</html>

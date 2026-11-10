@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('商品详情')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: header('catalog')}"></header>
+
+<main class="product-page">
+    <div class="product-main">
+        <nav class="product-breadcrumb" aria-label="面包屑">
+            <a th:href="@{/main}">首页</a><span>/</span>
+            <a th:href="@{/category}" th:text="${topCategory.name}">分类</a><span>/</span>
+            <a th:href="@{/category(categoryId=${category.id})}" th:text="${category.name}">小类</a><span>/</span>
+            <span th:text="${product.name}">商品</span>
+        </nav>
+
+        <section class="product-overview">
+            <div class="product-gallery" data-gallery>
+                <div class="product-main-media">
+                    <img data-main-image th:src="${'/' + cover}" th:alt="${product.name}">
+                </div>
+                <div class="detail-thumbs" th:if="${!#lists.isEmpty(images)}">
+                    <button type="button" class="detail-thumb is-active" data-image th:attr="data-image=${'/' + cover}">
+                        <img th:src="${'/' + cover}" alt="主图">
+                    </button>
+                    <button type="button" class="detail-thumb" th:each="img : ${images}"
+                            th:attr="data-image=${'/' + img.imagePath}">
+                        <img th:src="${'/' + img.imagePath}" th:alt="${img.altText != null ? img.altText : product.name}">
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-purchase">
+                <div class="product-title-row">
+                    <span class="product-category" th:text="${topCategory.name} + ' / ' + ${category.name}">分类</span>
+                    <span class="badge" th:classappend="${product.isOnSale() ? ' badge--ok' : ''}"
+                          th:text="${product.isOnSale() ? '在售' : '已下架'}">在售</span>
+                </div>
+                <h1 th:text="${product.name}">商品名称</h1>
+                <p class="product-sku" th:text="'SKU：' + ${product.sku}">SKU</p>
+                <p class="product-lead" th:text="${product.summary}">商品简介</p>
+
+                <div class="product-price-line">
+                    <span>价格</span>
+                    <strong class="buy-price money" th:text="${@money.format(product.price)}">¥0.00</strong>
+                </div>
+
+                <div class="product-stock-line">
+                    <span>库存</span>
+                    <strong th:class="${product.stock <= 0 ? 'stock-out' : (product.stock <= 5 ? 'stock-low' : 'stock-ok')}"
+                            th:text="${product.stock <= 0 ? '暂时售罄' : product.stock + ' 件'}">库存</strong>
+                </div>
+
+                <div class="product-purchase-note">
+                    <span>模拟支付</span>
+                    <p>本页面为课程实验项目，订单支付仅模拟成功或失败，不会产生真实扣款。</p>
+                </div>
+
+                <div th:if="${currentUser == null}" class="product-login-hint">
+                    <a class="btn btn--primary" th:href="@{/login(returnUrl=${'/product/' + product.id})}">登录后加入购物车</a>
+                </div>
+                <form th:if="${currentUser != null}" class="product-actions" th:action="@{/cart/add}" method="post">
+                    <input type="hidden" name="_csrf" th:value="${_csrf}">
+                    <input type="hidden" name="productId" th:value="${product.id}">
+                    <div class="product-quantity" data-qty-control>
+                        <button type="button" class="qty-button" data-qty-minus aria-label="减少数量">−</button>
+                        <input class="inline-qty" type="number" name="quantity" value="1" min="1"
+                               th:max="${product.stock > 99 ? 99 : product.stock}"
+                               th:disabled="${product.stock <= 0}" data-qty-input aria-label="购买数量">
+                        <button type="button" class="qty-button" data-qty-plus aria-label="增加数量">+</button>
+                    </div>
+                    <button type="submit" class="product-add-cart btn btn--primary"
+                            th:disabled="${product.stock <= 0}"
+                            th:text="${product.stock <= 0 ? '暂时售罄' : '加入购物车'}">加入购物车</button>
+                </form>
+                <p class="product-cart-link" th:if="${currentUser != null}">
+                    <a th:href="@{/cart}">查看购物车 →</a>
+                </p>
+
+                <a class="product-back" th:href="@{/category(categoryId=${category.id})}">← 返回分类</a>
+            </div>
+        </section>
+
+        <section class="product-detail-section">
+            <div class="product-detail-layout">
+                <div class="product-story">
+                    <span class="eyebrow">DETAILS</span>
+                    <h2>商品详情</h2>
+                    <p th:if="${product.description != null and !product.description.isBlank()}"
+                       th:text="${product.description}">商品详情</p>
+                    <p th:if="${product.description == null or product.description.isBlank()}">这件商品暂时没有更多文字介绍，可参考上方商品简介、分类和库存信息。</p>
+                </div>
+                <div class="product-highlights">
+                    <h2>购买信息</h2>
+                    <dl>
+                        <div><dt>商品编号</dt><dd th:text="${product.sku}">SKU</dd></div>
+                        <div><dt>所属分类</dt><dd th:text="${category.name}">分类</dd></div>
+                        <div><dt>库存状态</dt><dd th:text="${product.stock <= 0 ? '暂时售罄' : '现货 ' + product.stock + ' 件'}">库存</dd></div>
+                        <div><dt>支付方式</dt><dd>模拟支付（成功 / 失败）</dd></div>
+                    </dl>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MyPetStore | 陪它好好生活</title>
+    <link rel="icon" type="image/png" th:href="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css/jpetstore.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body class="welcome-page">
+<main class="welcome-shell">
+    <section class="welcome-visual">
+        <img th:src="@{/images/dog1.gif}" alt="一只等待主人的小狗">
+        <div class="welcome-visual__shade"></div>
+        <div class="welcome-visual__brand">
+            <img th:src="@{/images/logo.png}" alt="MyPetStore Logo">
+            <span>MyPetStore</span>
+        </div>
+        <div class="welcome-visual__copy">
+            <p>WELCOME BACK</p>
+            <h1>回来看看，<br>它正在等你。</h1>
+            <span>认真挑选每一份陪伴。</span>
+        </div>
+    </section>
+    <section class="welcome-panel">
+        <div class="welcome-intro">
+            <span class="eyebrow">MY PETSTORE</span>
+            <h2>陪它好好生活</h2>
+            <p>登录后查看订单、管理个人资料；也可以先逛逛商城，再决定带哪一份陪伴回家。</p>
+        </div>
+        <div class="welcome-actions">
+            <a class="welcome-action" th:href="@{/login}">账号登录</a>
+            <a class="welcome-action welcome-action--ghost" th:href="@{/main}">先逛逛商城</a>
+        </div>
+        <p class="welcome-guest">课程实验项目 · 演示数据 · 不接入真实支付</p>
+    </section>
+</main>
+</body>
+</html>
