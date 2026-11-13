@@ -23,6 +23,10 @@ Thumbs.db
 .dsh-office-*/
 *.local
 
+# 视觉验收的原始整页截图体积大，只把挑选后的小图放进 docs/screenshots/
+/rendered/
+/rendered2/
+
 # ===== 本地配置与密钥 =====
 application-local.yaml
 application-local.yml

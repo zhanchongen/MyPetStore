@@ -24,7 +24,7 @@
 .
 ├─ database/                 # 唯一的共享 SQL 来源（01 结构版 / 02 结构+演示数据）
 ├─ docs/                     # 设计说明、需求完成清单、验证记录、视频对照、提交记录
-├─ scripts/                  # 只读 smoke 脚本与验证说明
+├─ scripts/                  # smoke 脚本、页面截图验收脚本、商品插画生成脚本
 ├─ MyPetStore-SSM/           # 用户端工程
 └─ MyPetStore-admin/         # 管理端工程
 ```
@@ -109,6 +109,17 @@ mvn test
 
 用户端 43 个、管理端 24 个测试，共 67 个，均不依赖数据库。数据库导入、两端启动、用户端购物/下单/支付/取消、管理端分类/商品/订单/用户操作的手工 E2E 步骤与结果见 [docs/验证记录.md](docs/验证记录.md)；`scripts/user_smoke.py` 与 `scripts/admin_smoke.py` 可重复执行两端只读 smoke。
 
+## 视觉验收
+
+页面观感是要交付的一部分，不能靠"写完没看过"。`scripts/capture-pages.mjs` 用系统自带的 Edge/Chrome 以无头模式（CDP，零第三方依赖）逐页整页截图，覆盖未登录、已登录、购物车、结算、订单、个人资料与管理端主要页面：
+
+```bash
+# 前提：MySQL、8080、8081 都已启动，桌面已安装 Edge 或 Chrome；Node.js >= 22
+node scripts/capture-pages.mjs rendered
+```
+
+字体（Sora / Plus Jakarta Sans）已本地化到 `static/fonts/`，不依赖 Google Fonts；40 个演示商品的封面插画由 `scripts/generate_product_art.py` 生成，可重复运行。
+
 ## 功能状态
 
 实验一 P0 全部实现；选做 P1：个人资料、修改密码、确认收货、管理端用户启停。
@@ -120,6 +131,7 @@ mvn test
 - [设计说明](docs/设计说明.md)
 - [需求完成清单](docs/需求完成清单.md)
 - [验证记录](docs/验证记录.md)
+- [视觉验收](docs/视觉验收.md)
 - [视频步骤对照](docs/视频对照.md)
 - [提交记录](docs/提交记录.md)
 
