@@ -1,19 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="金鱼 教学示意图">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#e0f2fe"/>
-      <stop offset="100%" stop-color="#ffffff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0f9ff"/>
+      <stop offset="1" stop-color="#e0f2fe"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <circle cx="700" cy="92" r="150" fill="#38bdf8" opacity="0.18"/>
-  <circle cx="80" cy="730" r="120" fill="#38bdf8" opacity="0.12"/>
-  <circle cx="400" cy="300" r="132" fill="#ffffff" opacity="0.94"/>
-  <circle cx="400" cy="300" r="132" fill="none" stroke="#38bdf8" stroke-width="4" opacity="0.7"/>
-  <text x="400" y="347" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="108" font-weight="700" fill="#0369a1">鱼</text>
-  <text x="400" y="505" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="42" font-weight="700" fill="#0369a1">金鱼</text>
-  <text x="400" y="563" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="27" fill="#0369a1" opacity="0.82">宠物 · 品种示意图</text>
-  <text x="400" y="609" text-anchor="middle" font-family="Consolas, monospace" font-size="21" fill="#0369a1" opacity="0.62">SKU FISH-GOLDFISH-26</text>
-  <line x1="290" y1="700" x2="510" y2="700" stroke="#38bdf8" stroke-width="2" opacity="0.55"/>
-  <text x="400" y="744" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="20" fill="#0369a1" opacity="0.55">MyPetStore 课程演示素材</text>
+  <g id="deco" fill="#38bdf8">
+    <circle cx="686" cy="122" r="132" opacity="0.16"/>
+    <circle cx="96" cy="700" r="104" opacity="0.12"/>
+    <circle cx="708" cy="652" r="46" opacity="0.14"/>
+  </g>
+  <g id="plate">
+    <ellipse cx="400" cy="420" rx="310" ry="302" fill="#0284c7" opacity="0.05"/>
+    <ellipse cx="400" cy="412" rx="304" ry="299" fill="#0284c7" opacity="0.05"/>
+    <circle cx="400" cy="400" r="300" fill="#ffffff"/>
+    <circle cx="400" cy="400" r="300" fill="none" stroke="#38bdf8" stroke-width="5" opacity="0.22"/>
+  </g>
+  <g id="art">
+    <ellipse cx="400" cy="664" rx="111.6" ry="16" fill="#0284c7" opacity="0.1"/>
+    <path d="M 322 400 Q 250 320 190 300 Q 168 298 176 336 Q 150 356 168 390 Q 148 420 178 444 Q 160 478 200 484 Q 210 520 252 500 Q 300 478 338 448 Z" fill="#fb923c"/>
+    <path d="M 314 432 Q 248 470 206 512 Q 190 534 216 536 Q 268 512 322 476 Z" fill="#fb923c"/>
+    <path d="M 264 392 Q 218 356 196 338 Q 210 380 226 414 Z" fill="#fdba74" opacity="0.8"/>
+    <ellipse cx="448" cy="424" rx="152" ry="122" fill="#fb923c"/>
+    <ellipse cx="470" cy="464" rx="104" ry="66" fill="#fdba74"/>
+    <path d="M 424 306 Q 466 258 512 306 Q 476 316 424 306 Z" fill="#ea580c"/>
+    <path d="M 430 540 Q 462 588 500 552 Q 470 540 430 540 Z" fill="#ea580c" opacity="0.9"/>
+    <path d="M 520 350 Q 500 420 520 496" fill="none" opacity="0.5" stroke="#ea580c" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="548" cy="392" r="20" fill="#ffffff"/>
+    <circle cx="551" cy="392" r="11" fill="#1f2937"/>
+    <circle cx="546" cy="387" r="4.5" fill="#ffffff"/>
+    <path d="M 594 430 Q 610 434 600 446" fill="none" stroke="#ea580c" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 430 402 Q 444 424 430 446" fill="none" opacity="0.3" stroke="#ea580c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 464 414 Q 478 436 464 458" fill="none" opacity="0.3" stroke="#ea580c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 498 426 Q 512 448 498 470" fill="none" opacity="0.3" stroke="#ea580c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="600" cy="300" r="10" fill="#bae6fd" opacity="0.9"/>
+    <circle cx="628" cy="272" r="6" fill="#bae6fd" opacity="0.9"/>
+    <circle cx="592" cy="252" r="4" fill="#bae6fd" opacity="0.9"/>
+  </g>
 </svg>

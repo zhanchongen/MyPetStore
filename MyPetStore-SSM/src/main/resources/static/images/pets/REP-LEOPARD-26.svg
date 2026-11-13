@@ -1,19 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="豹纹守宫 教学示意图">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ecfccb"/>
-      <stop offset="100%" stop-color="#ffffff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7fee7"/>
+      <stop offset="1" stop-color="#ecfccb"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <circle cx="700" cy="92" r="150" fill="#a3e635" opacity="0.18"/>
-  <circle cx="80" cy="730" r="120" fill="#a3e635" opacity="0.12"/>
-  <circle cx="400" cy="300" r="132" fill="#ffffff" opacity="0.94"/>
-  <circle cx="400" cy="300" r="132" fill="none" stroke="#a3e635" stroke-width="4" opacity="0.7"/>
-  <text x="400" y="347" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="108" font-weight="700" fill="#4d7c0f">爬</text>
-  <text x="400" y="505" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="42" font-weight="700" fill="#4d7c0f">豹纹守宫</text>
-  <text x="400" y="563" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="27" fill="#4d7c0f" opacity="0.82">宠物 · 品种示意图</text>
-  <text x="400" y="609" text-anchor="middle" font-family="Consolas, monospace" font-size="21" fill="#4d7c0f" opacity="0.62">SKU REP-LEOPARD-26</text>
-  <line x1="290" y1="700" x2="510" y2="700" stroke="#a3e635" stroke-width="2" opacity="0.55"/>
-  <text x="400" y="744" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="20" fill="#4d7c0f" opacity="0.55">MyPetStore 课程演示素材</text>
+  <g id="deco" fill="#84cc16">
+    <circle cx="686" cy="122" r="132" opacity="0.16"/>
+    <circle cx="96" cy="700" r="104" opacity="0.12"/>
+    <circle cx="708" cy="652" r="46" opacity="0.14"/>
+  </g>
+  <g id="plate">
+    <ellipse cx="400" cy="420" rx="310" ry="302" fill="#4d7c0f" opacity="0.05"/>
+    <ellipse cx="400" cy="412" rx="304" ry="299" fill="#4d7c0f" opacity="0.05"/>
+    <circle cx="400" cy="400" r="300" fill="#ffffff"/>
+    <circle cx="400" cy="400" r="300" fill="none" stroke="#84cc16" stroke-width="5" opacity="0.22"/>
+  </g>
+  <g id="art">
+    <ellipse cx="400" cy="676" rx="79.7" ry="16" fill="#4d7c0f" opacity="0.1"/>
+    <path d="M 350 552 Q 326 646 400 666 Q 474 646 450 552 Z" fill="#fde047"/>
+    <ellipse cx="400" cy="470" rx="122" ry="112" fill="#fde047"/>
+    <ellipse cx="400" cy="492" rx="80" ry="66" fill="#fef9c3" opacity="0.7"/>
+    <path d="M 318 452 Q 268 500 262 516" fill="none" stroke="#fde047" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 330 570 Q 280 616 274 624" fill="none" stroke="#fde047" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 262 520 L 250 536" fill="none" stroke="#fef9c3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 262 520 L 244 540" fill="none" stroke="#fef9c3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 262 520 L 238 544" fill="none" stroke="#fef9c3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 482 452 Q 532 500 538 516" fill="none" stroke="#fde047" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 470 570 Q 520 616 526 624" fill="none" stroke="#fde047" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 538 520 L 550 536" fill="none" stroke="#fef9c3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 538 520 L 556 540" fill="none" stroke="#fef9c3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 538 520 L 562 544" fill="none" stroke="#fef9c3" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <ellipse cx="400" cy="302" rx="110" ry="88" fill="#fde047"/>
+    <ellipse cx="400" cy="324" rx="74" ry="50" fill="#fef9c3" opacity="0.6"/>
+    <circle cx="348" cy="286" r="22" fill="#fef9c3"/>
+    <ellipse cx="348" cy="286" rx="7" ry="18" fill="#40382f"/>
+    <circle cx="340" cy="278" r="5" fill="#ffffff"/>
+    <circle cx="452" cy="286" r="22" fill="#fef9c3"/>
+    <ellipse cx="452" cy="286" rx="7" ry="18" fill="#40382f"/>
+    <circle cx="444" cy="278" r="5" fill="#ffffff"/>
+    <path d="M 366 330 Q 400 350 434 330" fill="none" stroke="#40382f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <ellipse cx="344" cy="250" rx="10" ry="8" fill="#854d0e"/>
+    <ellipse cx="452" cy="248" rx="9" ry="7.2" fill="#854d0e"/>
+    <ellipse cx="388" cy="262" rx="8" ry="6.4" fill="#854d0e"/>
+    <ellipse cx="330" cy="330" rx="8" ry="6.4" fill="#854d0e"/>
+    <ellipse cx="470" cy="326" rx="9" ry="7.2" fill="#854d0e"/>
+    <ellipse cx="356" cy="420" rx="12" ry="9.6" fill="#854d0e"/>
+    <ellipse cx="448" cy="418" rx="11" ry="8.8" fill="#854d0e"/>
+    <ellipse cx="400" cy="460" rx="12" ry="9.6" fill="#854d0e"/>
+    <ellipse cx="320" cy="470" rx="9" ry="7.2" fill="#854d0e"/>
+    <ellipse cx="484" cy="466" rx="8" ry="6.4" fill="#854d0e"/>
+    <ellipse cx="380" cy="520" rx="11" ry="8.8" fill="#854d0e"/>
+    <ellipse cx="432" cy="540" rx="9" ry="7.2" fill="#854d0e"/>
+    <ellipse cx="360" cy="586" rx="10" ry="8" fill="#854d0e"/>
+    <ellipse cx="444" cy="590" rx="9" ry="7.2" fill="#854d0e"/>
+    <ellipse cx="400" cy="612" rx="8" ry="6.4" fill="#854d0e"/>
+    <ellipse cx="372" cy="638" rx="8" ry="6.4" fill="#854d0e"/>
+    <ellipse cx="428" cy="640" rx="7" ry="5.6" fill="#854d0e"/>
+  </g>
 </svg>

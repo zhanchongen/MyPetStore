@@ -1,19 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="爬宠数字温湿度计 教学示意图">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#ecfccb"/>
-      <stop offset="100%" stop-color="#ffffff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f7fee7"/>
+      <stop offset="1" stop-color="#ecfccb"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <circle cx="700" cy="92" r="150" fill="#a3e635" opacity="0.18"/>
-  <circle cx="80" cy="730" r="120" fill="#a3e635" opacity="0.12"/>
-  <circle cx="400" cy="300" r="132" fill="#ffffff" opacity="0.94"/>
-  <circle cx="400" cy="300" r="132" fill="none" stroke="#a3e635" stroke-width="4" opacity="0.7"/>
-  <text x="400" y="347" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="108" font-weight="700" fill="#4d7c0f">爬</text>
-  <text x="400" y="505" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="42" font-weight="700" fill="#4d7c0f">爬宠数字温湿度计</text>
-  <text x="400" y="563" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="27" fill="#4d7c0f" opacity="0.82">用品 · 教学示意图</text>
-  <text x="400" y="609" text-anchor="middle" font-family="Consolas, monospace" font-size="21" fill="#4d7c0f" opacity="0.62">SKU REP-THERMO-26</text>
-  <line x1="290" y1="700" x2="510" y2="700" stroke="#a3e635" stroke-width="2" opacity="0.55"/>
-  <text x="400" y="744" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="20" fill="#4d7c0f" opacity="0.55">MyPetStore 课程演示素材</text>
+  <g id="deco" fill="#84cc16">
+    <circle cx="686" cy="122" r="132" opacity="0.16"/>
+    <circle cx="96" cy="700" r="104" opacity="0.12"/>
+    <circle cx="708" cy="652" r="46" opacity="0.14"/>
+  </g>
+  <g id="plate">
+    <ellipse cx="400" cy="420" rx="310" ry="302" fill="#4d7c0f" opacity="0.05"/>
+    <ellipse cx="400" cy="412" rx="304" ry="299" fill="#4d7c0f" opacity="0.05"/>
+    <circle cx="400" cy="400" r="300" fill="#ffffff"/>
+    <circle cx="400" cy="400" r="300" fill="none" stroke="#84cc16" stroke-width="5" opacity="0.22"/>
+  </g>
+  <g id="art">
+    <ellipse cx="400" cy="636" rx="160.8" ry="16" fill="#4d7c0f" opacity="0.1"/>
+    <circle cx="400" cy="304" r="166" fill="#ecfccb"/>
+    <circle cx="400" cy="304" r="166" fill="none" stroke="#84cc16" stroke-width="9"/>
+    <circle cx="400" cy="304" r="138" fill="#ffffff"/>
+    <line x1="309.9" y1="252" x2="290.9" y2="241" stroke="#4ade80" stroke-width="9" stroke-linecap="round"/>
+    <line x1="322.7" y1="234.4" x2="306.4" y2="219.7" stroke="#4ade80" stroke-width="9" stroke-linecap="round"/>
+    <line x1="338.9" y1="219.9" x2="325.9" y2="202.1" stroke="#4ade80" stroke-width="9" stroke-linecap="round"/>
+    <line x1="357.7" y1="209" x2="348.8" y2="188.9" stroke="#4ade80" stroke-width="9" stroke-linecap="round"/>
+    <line x1="378.4" y1="202.3" x2="373.8" y2="180.8" stroke="#facc15" stroke-width="9" stroke-linecap="round"/>
+    <line x1="400" y1="200" x2="400" y2="178" stroke="#facc15" stroke-width="9" stroke-linecap="round"/>
+    <line x1="421.6" y1="202.3" x2="426.2" y2="180.8" stroke="#facc15" stroke-width="9" stroke-linecap="round"/>
+    <line x1="442.3" y1="209" x2="451.2" y2="188.9" stroke="#facc15" stroke-width="9" stroke-linecap="round"/>
+    <line x1="461.1" y1="219.9" x2="474.1" y2="202.1" stroke="#ef4444" stroke-width="9" stroke-linecap="round"/>
+    <line x1="477.3" y1="234.4" x2="493.6" y2="219.7" stroke="#ef4444" stroke-width="9" stroke-linecap="round"/>
+    <line x1="490.1" y1="252" x2="509.1" y2="241" stroke="#ef4444" stroke-width="9" stroke-linecap="round"/>
+    <line x1="400" y1="304" x2="439" y2="216.3" stroke="#dc2626" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="400" cy="304" r="14" fill="#84cc16"/>
+    <circle cx="400" cy="304" r="6" fill="#ecfccb"/>
+    <rect x="386" y="470" width="28" height="132" rx="14" fill="#4d7c0f"/>
+    <circle cx="400" cy="606" r="18" fill="#4d7c0f"/>
+    <path d="M 400 454 L 400 470" fill="none" stroke="#4d7c0f" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="382" y="136" width="36" height="16" rx="8" fill="#84cc16"/>
+  </g>
 </svg>

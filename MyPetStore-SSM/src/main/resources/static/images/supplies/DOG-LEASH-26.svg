@@ -1,19 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="轻便反光牵引绳 教学示意图">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#fef3c7"/>
-      <stop offset="100%" stop-color="#ffffff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff7ed"/>
+      <stop offset="1" stop-color="#ffedd5"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <circle cx="700" cy="92" r="150" fill="#fbbf24" opacity="0.18"/>
-  <circle cx="80" cy="730" r="120" fill="#fbbf24" opacity="0.12"/>
-  <circle cx="400" cy="300" r="132" fill="#ffffff" opacity="0.94"/>
-  <circle cx="400" cy="300" r="132" fill="none" stroke="#fbbf24" stroke-width="4" opacity="0.7"/>
-  <text x="400" y="347" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="108" font-weight="700" fill="#b45309">犬</text>
-  <text x="400" y="505" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="42" font-weight="700" fill="#b45309">轻便反光牵引绳</text>
-  <text x="400" y="563" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="27" fill="#b45309" opacity="0.82">用品 · 教学示意图</text>
-  <text x="400" y="609" text-anchor="middle" font-family="Consolas, monospace" font-size="21" fill="#b45309" opacity="0.62">SKU DOG-LEASH-26</text>
-  <line x1="290" y1="700" x2="510" y2="700" stroke="#fbbf24" stroke-width="2" opacity="0.55"/>
-  <text x="400" y="744" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="20" fill="#b45309" opacity="0.55">MyPetStore 课程演示素材</text>
+  <g id="deco" fill="#f59e0b">
+    <circle cx="686" cy="122" r="132" opacity="0.16"/>
+    <circle cx="96" cy="700" r="104" opacity="0.12"/>
+    <circle cx="708" cy="652" r="46" opacity="0.14"/>
+  </g>
+  <g id="plate">
+    <ellipse cx="400" cy="420" rx="310" ry="302" fill="#d97706" opacity="0.05"/>
+    <ellipse cx="400" cy="412" rx="304" ry="299" fill="#d97706" opacity="0.05"/>
+    <circle cx="400" cy="400" r="300" fill="#ffffff"/>
+    <circle cx="400" cy="400" r="300" fill="none" stroke="#f59e0b" stroke-width="5" opacity="0.22"/>
+  </g>
+  <g id="art">
+    <ellipse cx="400" cy="656" rx="128.1" ry="16" fill="#d97706" opacity="0.1"/>
+    <ellipse cx="400" cy="240" rx="140" ry="50" fill="#ffffff" stroke="#d97706" stroke-width="22"/>
+    <ellipse cx="400" cy="240" rx="140" ry="50" fill="none" stroke="#f59e0b" stroke-width="13"/>
+    <circle cx="400" cy="181" r="16" fill="#fde68a" stroke="#d97706" stroke-width="5"/>
+    <circle cx="400" cy="300" r="20" fill="none" stroke="#f59e0b" stroke-width="11"/>
+    <path d="M 400 320 C 415.3 326 474 334 492 356 C 510 378 515.3 424.7 508 452 C 500.7 479.3 473.3 504 448 520 C 422.7 536 375.7 530 356 548 C 336.3 566 322 610.3 330 628 C 338 645.7 378 655.3 404 654 C 430 652.7 472.3 625.7 486 620" fill="none" stroke="#f59e0b" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 400 320 C 415.3 326 474 334 492 356 C 510 378 515.3 424.7 508 452 C 500.7 479.3 473.3 504 448 520 C 422.7 536 375.7 530 356 548 C 336.3 566 322 610.3 330 628 C 338 645.7 378 655.3 404 654 C 430 652.7 472.3 625.7 486 620" fill="none" opacity="0.8" stroke="#fde68a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="16 14"/>
+    <ellipse cx="400" cy="632" rx="78" ry="30" fill="none" stroke="#f59e0b" stroke-width="22"/>
+    <rect x="384" y="316" width="32" height="22" rx="8" fill="#d97706" opacity="0.8"/>
+  </g>
 </svg>

@@ -1,19 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="玄凤鹦鹉 教学示意图">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#d1fae5"/>
-      <stop offset="100%" stop-color="#ffffff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ecfdf5"/>
+      <stop offset="1" stop-color="#d1fae5"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <circle cx="700" cy="92" r="150" fill="#34d399" opacity="0.18"/>
-  <circle cx="80" cy="730" r="120" fill="#34d399" opacity="0.12"/>
-  <circle cx="400" cy="300" r="132" fill="#ffffff" opacity="0.94"/>
-  <circle cx="400" cy="300" r="132" fill="none" stroke="#34d399" stroke-width="4" opacity="0.7"/>
-  <text x="400" y="347" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="108" font-weight="700" fill="#047857">鸟</text>
-  <text x="400" y="505" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="42" font-weight="700" fill="#047857">玄凤鹦鹉</text>
-  <text x="400" y="563" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="27" fill="#047857" opacity="0.82">宠物 · 品种示意图</text>
-  <text x="400" y="609" text-anchor="middle" font-family="Consolas, monospace" font-size="21" fill="#047857" opacity="0.62">SKU BIRD-COCKATIEL-26</text>
-  <line x1="290" y1="700" x2="510" y2="700" stroke="#34d399" stroke-width="2" opacity="0.55"/>
-  <text x="400" y="744" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="20" fill="#047857" opacity="0.55">MyPetStore 课程演示素材</text>
+  <g id="deco" fill="#34d399">
+    <circle cx="686" cy="122" r="132" opacity="0.16"/>
+    <circle cx="96" cy="700" r="104" opacity="0.12"/>
+    <circle cx="708" cy="652" r="46" opacity="0.14"/>
+  </g>
+  <g id="plate">
+    <ellipse cx="400" cy="420" rx="310" ry="302" fill="#059669" opacity="0.05"/>
+    <ellipse cx="400" cy="412" rx="304" ry="299" fill="#059669" opacity="0.05"/>
+    <circle cx="400" cy="400" r="300" fill="#ffffff"/>
+    <circle cx="400" cy="400" r="300" fill="none" stroke="#34d399" stroke-width="5" opacity="0.22"/>
+  </g>
+  <g id="art">
+    <ellipse cx="400" cy="672" rx="91.7" ry="16" fill="#059669" opacity="0.1"/>
+    <path d="M 330 570 Q 292 644 288 668 Q 324 662 350 632 Q 372 606 372 588 Z" fill="#a8a29e"/>
+    <path d="M 340 584 Q 320 626 310 652 Q 334 640 350 616 Z" fill="#d6d3d1"/>
+    <ellipse cx="406" cy="480" rx="122" ry="136" fill="#a8a29e"/>
+    <ellipse cx="428" cy="508" rx="74" ry="100" fill="#d6d3d1"/>
+    <path d="M 318 436 Q 282 514 326 578 Q 372 612 400 566 Q 350 524 358 452 Z" fill="#78716c"/>
+    <path d="M 340 474 Q 320 520 350 554" fill="none" opacity="0.8" stroke="#d6d3d1" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="424" cy="334" r="92" fill="#a8a29e"/>
+    <ellipse cx="470" cy="364" rx="64" ry="52" fill="#fde047"/>
+    <circle cx="474" cy="372" r="24" fill="#fb923c"/>
+    <path d="M 424 254 Q 412 190 436 178 Q 448 214 448 252 Z" fill="#fde047"/>
+    <path d="M 452 260 Q 466 198 492 196 Q 486 232 470 264 Z" fill="#fde047"/>
+    <path d="M 396 262 Q 366 208 342 214 Q 366 240 378 270 Z" fill="#fde047"/>
+    <polygon points="504,330 556,352 504,364" fill="#a8a29e"/>
+    <circle cx="456" cy="322" r="11" fill="#40382f"/>
+    <circle cx="453" cy="319" r="4" fill="#ffffff"/>
+    <line x1="378" y1="596" x2="374" y2="654" stroke="#f59e0b" stroke-width="10" stroke-linecap="round"/>
+    <path d="M 374 654 L 344 658" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 374 654 L 394 664" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="418" y1="596" x2="414" y2="654" stroke="#f59e0b" stroke-width="10" stroke-linecap="round"/>
+    <path d="M 414 654 L 384 658" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 414 654 L 434 664" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>

@@ -1,19 +1,46 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="虎皮鹦鹉 教学示意图">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#d1fae5"/>
-      <stop offset="100%" stop-color="#ffffff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ecfdf5"/>
+      <stop offset="1" stop-color="#d1fae5"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <circle cx="700" cy="92" r="150" fill="#34d399" opacity="0.18"/>
-  <circle cx="80" cy="730" r="120" fill="#34d399" opacity="0.12"/>
-  <circle cx="400" cy="300" r="132" fill="#ffffff" opacity="0.94"/>
-  <circle cx="400" cy="300" r="132" fill="none" stroke="#34d399" stroke-width="4" opacity="0.7"/>
-  <text x="400" y="347" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="108" font-weight="700" fill="#047857">鸟</text>
-  <text x="400" y="505" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="42" font-weight="700" fill="#047857">虎皮鹦鹉</text>
-  <text x="400" y="563" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="27" fill="#047857" opacity="0.82">宠物 · 品种示意图</text>
-  <text x="400" y="609" text-anchor="middle" font-family="Consolas, monospace" font-size="21" fill="#047857" opacity="0.62">SKU BIRD-BUDGIE-26</text>
-  <line x1="290" y1="700" x2="510" y2="700" stroke="#34d399" stroke-width="2" opacity="0.55"/>
-  <text x="400" y="744" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="20" fill="#047857" opacity="0.55">MyPetStore 课程演示素材</text>
+  <g id="deco" fill="#34d399">
+    <circle cx="686" cy="122" r="132" opacity="0.16"/>
+    <circle cx="96" cy="700" r="104" opacity="0.12"/>
+    <circle cx="708" cy="652" r="46" opacity="0.14"/>
+  </g>
+  <g id="plate">
+    <ellipse cx="400" cy="420" rx="310" ry="302" fill="#059669" opacity="0.05"/>
+    <ellipse cx="400" cy="412" rx="304" ry="299" fill="#059669" opacity="0.05"/>
+    <circle cx="400" cy="400" r="300" fill="#ffffff"/>
+    <circle cx="400" cy="400" r="300" fill="none" stroke="#34d399" stroke-width="5" opacity="0.22"/>
+  </g>
+  <g id="art">
+    <ellipse cx="400" cy="672" rx="91.7" ry="16" fill="#059669" opacity="0.1"/>
+    <polygon points="348,560 286,626 332,646 382,604" fill="#38bdf8"/>
+    <polygon points="358,572 316,620 346,632 380,602" fill="#7dd3fc"/>
+    <ellipse cx="412" cy="470" rx="104" ry="126" fill="#4ade80"/>
+    <ellipse cx="432" cy="500" rx="62" ry="84" fill="#86efac"/>
+    <path d="M 330 430 Q 296 508 338 572 Q 378 602 404 560 Q 358 520 366 446 Z" fill="#22c55e"/>
+    <path d="M 338 470 Q 360 510 384 540" fill="none" opacity="0.8" stroke="#1f2937" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 348 500 Q 370 536 390 558" fill="none" opacity="0.8" stroke="#1f2937" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 358 530 Q 380 562 396 576" fill="none" opacity="0.8" stroke="#1f2937" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="438" cy="326" r="82" fill="#fde047"/>
+    <path d="M 382 266 Q 420 252 462 272" fill="none" opacity="0.8" stroke="#1f2937" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 388 288 Q 424 274 460 294" fill="none" opacity="0.8" stroke="#1f2937" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 394 310 Q 428 296 458 316" fill="none" opacity="0.8" stroke="#1f2937" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="468" cy="352" r="18" fill="#38bdf8" opacity="0.9"/>
+    <circle cx="468" cy="352" r="5" fill="#1f2937"/>
+    <polygon points="502,318 566,344 502,360" fill="#94a3b8"/>
+    <circle cx="466" cy="314" r="12" fill="#1f2937"/>
+    <circle cx="463" cy="311" r="4.5" fill="#ffffff"/>
+    <line x1="378" y1="596" x2="374" y2="652" stroke="#f59e0b" stroke-width="10" stroke-linecap="round"/>
+    <path d="M 374 652 L 344 656" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 374 652 L 394 662" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <line x1="418" y1="596" x2="414" y2="652" stroke="#f59e0b" stroke-width="10" stroke-linecap="round"/>
+    <path d="M 414 652 L 384 656" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 414 652 L 434 662" fill="none" stroke="#f59e0b" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>

@@ -1,19 +1,37 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="天然木质站杆 教学示意图">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#d1fae5"/>
-      <stop offset="100%" stop-color="#ffffff"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ecfdf5"/>
+      <stop offset="1" stop-color="#d1fae5"/>
     </linearGradient>
   </defs>
   <rect width="800" height="800" fill="url(#bg)"/>
-  <circle cx="700" cy="92" r="150" fill="#34d399" opacity="0.18"/>
-  <circle cx="80" cy="730" r="120" fill="#34d399" opacity="0.12"/>
-  <circle cx="400" cy="300" r="132" fill="#ffffff" opacity="0.94"/>
-  <circle cx="400" cy="300" r="132" fill="none" stroke="#34d399" stroke-width="4" opacity="0.7"/>
-  <text x="400" y="347" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="108" font-weight="700" fill="#047857">鸟</text>
-  <text x="400" y="505" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="42" font-weight="700" fill="#047857">天然木质站杆</text>
-  <text x="400" y="563" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="27" fill="#047857" opacity="0.82">用品 · 教学示意图</text>
-  <text x="400" y="609" text-anchor="middle" font-family="Consolas, monospace" font-size="21" fill="#047857" opacity="0.62">SKU BIRD-PERCH-26</text>
-  <line x1="290" y1="700" x2="510" y2="700" stroke="#34d399" stroke-width="2" opacity="0.55"/>
-  <text x="400" y="744" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif" font-size="20" fill="#047857" opacity="0.55">MyPetStore 课程演示素材</text>
+  <g id="deco" fill="#34d399">
+    <circle cx="686" cy="122" r="132" opacity="0.16"/>
+    <circle cx="96" cy="700" r="104" opacity="0.12"/>
+    <circle cx="708" cy="652" r="46" opacity="0.14"/>
+  </g>
+  <g id="plate">
+    <ellipse cx="400" cy="420" rx="310" ry="302" fill="#059669" opacity="0.05"/>
+    <ellipse cx="400" cy="412" rx="304" ry="299" fill="#059669" opacity="0.05"/>
+    <circle cx="400" cy="400" r="300" fill="#ffffff"/>
+    <circle cx="400" cy="400" r="300" fill="none" stroke="#34d399" stroke-width="5" opacity="0.22"/>
+  </g>
+  <g id="art" transform="translate(0,-40)">
+    <ellipse cx="400" cy="600" rx="202.6" ry="18" fill="#059669" opacity="0.1"/>
+    <rect x="198" y="396" width="40" height="62" rx="10" fill="#059669"/>
+    <rect x="206" y="408" width="24" height="12" rx="6" fill="#d1fae5" opacity="0.8"/>
+    <rect x="562" y="396" width="40" height="62" rx="10" fill="#059669"/>
+    <rect x="570" y="408" width="24" height="12" rx="6" fill="#d1fae5" opacity="0.8"/>
+    <path d="M 160 524 C 180 516 240 482.3 280 476 C 320 469.7 360.7 489.3 400 486 C 439.3 482.7 476 457.7 516 456 C 556 454.3 619.3 472.7 640 476" fill="none" stroke="#059669" stroke-width="50" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 160 524 C 180 516 240 482.3 280 476 C 320 469.7 360.7 489.3 400 486 C 439.3 482.7 476 457.7 516 456 C 556 454.3 619.3 472.7 640 476" fill="none" stroke="#34d399" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 200 498 Q 300 486 390 470 M 430 480 Q 520 462 600 478" fill="none" opacity="0.5" stroke="#b45309" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <ellipse cx="330" cy="484" rx="15" ry="9" fill="#92400e" opacity="0.8"/>
+    <ellipse cx="524" cy="464" rx="13" ry="8" fill="#92400e" opacity="0.8"/>
+    <path d="M 610 476 Q 636 440 660 446" fill="none" stroke="#34d399" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 648 452 Q 664 428 656 408 Q 638 424 640 448 Z" fill="#34d399"/>
+    <path d="M 604 470 Q 618 400 608 336" fill="none" stroke="#34d399" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 608 388 Q 636 356 664 362 Q 640 392 610 400 Z" fill="#34d399"/>
+    <path d="M 606 348 Q 580 318 552 322 Q 574 350 604 360 Z" fill="#d1fae5"/>
+  </g>
 </svg>
