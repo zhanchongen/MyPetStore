@@ -1,123 +1,159 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: head('购物车')}"></head>
-<body>
-<header th:replace="~{fragments/layout :: header('cart')}"></header>
+<body class="cart-page">
+<div class="mpa-shell cart-shell">
+    <header th:replace="~{fragments/layout :: header('cart')}"></header>
 
-<main class="cart-page">
-    <div class="cart-main">
+    <main class="cart-main">
         <section class="cart-intro">
             <div>
-                <span class="eyebrow">YOUR CART</span>
+                <span>MY SHOPPING CART</span>
                 <h1>购物车</h1>
                 <p>确认商品与数量后整车结算；价格和库存会在结算时再次校验。</p>
             </div>
-            <ol class="cart-steps">
-                <li class="is-active">购物车</li>
-                <li>确认订单</li>
-                <li>模拟支付</li>
-            </ol>
+            <div class="cart-steps" aria-label="结算步骤">
+                <span class="is-active"><b>01</b>购物车</span>
+                <i></i>
+                <span><b>02</b>确认订单</span>
+                <i></i>
+                <span><b>03</b>模拟支付</span>
+            </div>
         </section>
 
         <div class="cart-layout" th:if="${!cart.isEmpty()}">
-            <section class="cart-items-panel">
+            <article class="cart-items-panel">
                 <div class="cart-panel-heading">
-                    <h2>商品清单</h2>
-                    <span th:text="${cart.totalQuantity()} + ' 件商品'">0 件商品</span>
+                    <h2 class="cart-select-all">商品清单
+                        <span th:text="${cart.totalQuantity()} + ' 件'">0 件</span>
+                    </h2>
+                    <span>单价</span>
+                    <span>数量</span>
+                    <span>小计</span>
                 </div>
-                <table class="cart-table">
-                    <thead>
-                    <tr>
-                        <th>商品</th>
-                        <th>单价</th>
-                        <th>数量</th>
-                        <th>小计</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="line : ${cart.lines()}" th:classappend="${!line.isAvailable() ? ' is-invalid' : ''}">
-                        <td>
-                            <div class="cart-product">
-                                <a class="cart-product__image" th:href="@{/product/{id}(id=${line.productId})}">
-                                    <img th:src="${line.coverImage != null ? '/' + line.coverImage : '/images/logo.png'}"
-                                         th:alt="${line.name}">
-                                </a>
-                                <div class="cart-product__info">
-                                    <h3><a th:href="@{/product/{id}(id=${line.productId})}" th:text="${line.name}">商品名称</a></h3>
-                                    <p th:text="'SKU：' + ${line.sku}">SKU</p>
-                                    <p class="cart-line-warning" th:if="${!line.isAvailable()}"
-                                       th:text="${line.invalidReason()}">商品不可购买</p>
-                                    <p class="cart-line-warning" th:if="${line.isAvailable() and line.stock <= 5}"
-                                       th:text="${'库存仅剩 ' + line.stock + ' 件'}">库存紧张</p>
+
+                <div class="cart-table-wrap">
+                    <table id="cartTable" class="cart-table">
+                        <thead>
+                        <tr>
+                            <th>商品</th>
+                            <th>单价</th>
+                            <th>数量</th>
+                            <th>小计</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="line : ${cart.lines()}" th:classappend="${!line.isAvailable() ? ' is-invalid' : ''}">
+                            <td>
+                                <div class="cart-product">
+                                    <a class="cart-product__image" th:href="@{/product/{id}(id=${line.productId})}">
+                                        <img th:src="${line.coverImage != null ? '/' + line.coverImage : '/images/logo.png'}"
+                                             th:alt="${line.name}">
+                                    </a>
+                                    <div class="cart-product__info">
+                                        <h2><a th:href="@{/product/{id}(id=${line.productId})}" th:text="${line.name}">商品名称</a></h2>
+                                        <p th:text="'SKU：' + ${line.sku}">SKU</p>
+                                        <p class="cart-line-warning" th:if="${!line.isAvailable()}"
+                                           th:text="${line.invalidReason()}">商品不可购买</p>
+                                        <p class="cart-line-warning" th:if="${line.isAvailable() and line.stock <= 5}"
+                                           th:text="${'库存仅剩 ' + line.stock + ' 件'}">库存紧张</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td class="cart-unit-price money" th:text="${@money.format(line.price)}">¥0.00</td>
-                        <td>
-                            <form th:if="${line.isAvailable()}" class="cart-qty" th:action="@{/cart/update}" method="post">
-                                <input type="hidden" name="_csrf" th:value="${_csrf}">
-                                <input type="hidden" name="itemId" th:value="${line.itemId}">
-                                <input type="hidden" name="version" th:value="${line.version}">
-                                <div class="cart-qty__control" data-qty-control>
-                                    <button type="button" class="qty-button" data-qty-minus aria-label="减少数量">−</button>
-                                    <input type="number" name="quantity" th:value="${line.quantity}" min="1" max="99"
-                                           data-qty-input aria-label="商品数量">
-                                    <button type="button" class="qty-button" data-qty-plus aria-label="增加数量">+</button>
-                                </div>
-                                <button type="submit" class="btn btn--sm btn--ghost">更新</button>
-                            </form>
-                            <span th:if="${!line.isAvailable()}" class="cart-unavailable" th:text="${line.isSoldOut() ? '已售罄' : '不可购买'}">不可购买</span>
-                        </td>
-                        <td class="cart-line-total money" th:text="${@money.format(line.lineAmount)}">¥0.00</td>
-                        <td>
-                            <form th:action="@{/cart/remove}" method="post" data-confirm="确定从购物车移除这件商品吗？">
-                                <input type="hidden" name="_csrf" th:value="${_csrf}">
-                                <input type="hidden" name="itemId" th:value="${line.itemId}">
-                                <input type="hidden" name="version" th:value="${line.version}">
-                                <button type="submit" class="cart-remove">移除</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <a class="cart-continue" th:href="@{/category}">← 继续选购</a>
-            </section>
+                            </td>
+                            <td data-label="单价">
+                                <span class="cart-unit-price money" th:text="${@money.format(line.price)}">¥0.00</span>
+                            </td>
+                            <td data-label="数量">
+                                <form th:if="${line.isAvailable()}" th:action="@{/cart/update}" method="post">
+                                    <input type="hidden" name="_csrf" th:value="${_csrf}">
+                                    <input type="hidden" name="itemId" th:value="${line.itemId}">
+                                    <input type="hidden" name="version" th:value="${line.version}">
+                                    <div class="inline-qty cart-qty" data-qty-control>
+                                        <button type="button" data-qty-minus aria-label="减少数量">−</button>
+                                        <input type="number" name="quantity" th:value="${line.quantity}" min="1" max="99"
+                                               data-qty-input aria-label="商品数量">
+                                        <button type="button" data-qty-plus aria-label="增加数量">＋</button>
+                                    </div>
+                                    <button type="submit" class="btn btn--sm btn--ghost">更新</button>
+                                </form>
+                                <span th:if="${!line.isAvailable()}" class="cart-unavailable"
+                                      th:text="${line.isSoldOut() ? '已售罄' : '不可购买'}">不可购买</span>
+                            </td>
+                            <td data-label="小计">
+                                <strong class="cart-line-total money" th:text="${@money.format(line.lineAmount)}">¥0.00</strong>
+                            </td>
+                            <td>
+                                <form th:action="@{/cart/remove}" method="post" data-confirm="确定从购物车移除这件商品吗？">
+                                    <input type="hidden" name="_csrf" th:value="${_csrf}">
+                                    <input type="hidden" name="itemId" th:value="${line.itemId}">
+                                    <input type="hidden" name="version" th:value="${line.version}">
+                                    <button type="submit" class="cart-remove"
+                                            th:attr="aria-label=${'移除 ' + line.name}">×</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="cart-items-footer">
+                    <a th:href="@{/category}">← 继续选购</a>
+                    <span>结算时会再次校验价格与库存</span>
+                </div>
+            </article>
 
             <aside class="cart-summary">
-                <h2>订单汇总</h2>
-                <div class="cart-summary-list">
-                    <div><span>商品数量</span><strong th:text="${cart.totalQuantity()} + ' 件'">0 件</strong></div>
-                    <div><span>商品金额</span><strong class="money" th:text="${@money.format(cart.validTotal())}">¥0.00</strong></div>
+                <div class="cart-summary__title">
+                    <span>ORDER SUMMARY</span>
+                    <h2>订单汇总</h2>
                 </div>
+
+                <ul class="cart-summary-list">
+                    <li>
+                        <span>商品数量</span>
+                        <strong><b th:text="${cart.totalQuantity()}">0</b> 件</strong>
+                    </li>
+                    <li>
+                        <span>商品金额</span>
+                        <strong class="money" th:text="${@money.format(cart.validTotal())}">¥0.00</strong>
+                    </li>
+                </ul>
+
                 <div class="cart-grand-total">
-                    <span>合计</span>
+                    <span>应付总额<small>仅统计可购买商品</small></span>
                     <strong class="money" th:text="${@money.format(cart.validTotal())}">¥0.00</strong>
                 </div>
+
                 <p class="cart-invalid-note" th:if="${cart.hasInvalid()}">
                     购物车中有不可购买的商品，请先移除或调整数量后再结算。
                 </p>
-                <a class="cart-checkout btn btn--primary" th:if="${cart.allAvailable()}" th:href="@{/checkout}">去结算</a>
-                <span class="cart-checkout btn is-disabled" th:unless="${cart.allAvailable()}">去结算</span>
+                <a class="cart-checkout" th:if="${cart.allAvailable()}" th:href="@{/checkout}">去结算 <span>→</span></a>
+                <span class="cart-checkout is-disabled" th:unless="${cart.allAvailable()}">去结算 <span>→</span></span>
                 <p class="cart-secure">模拟支付流程 · 不会产生真实扣款</p>
+
                 <div class="cart-help">
-                    <h3>需要帮助？</h3>
+                    <span>需要帮助？</span>
                     <p>订单相关问题可在订单详情中查看状态与时间记录。</p>
-                    <a th:href="@{/orders}" th:if="${currentUser != null}">查看我的订单 →</a>
-                    <a th:href="@{/login(returnUrl='/orders')}" th:if="${currentUser == null}">登录后查看订单 →</a>
+                    <a th:if="${currentUser != null}" th:href="@{/orders}">查看我的订单 →</a>
+                    <a th:if="${currentUser == null}" th:href="@{/login(returnUrl='/orders')}">登录后查看订单 →</a>
                 </div>
             </aside>
         </div>
 
-        <section class="cart-empty empty-state" th:if="${cart.isEmpty()}">
-            <span class="eyebrow">EMPTY CART</span>
-            <h2>购物车还是空的</h2>
-            <p>去分类页挑选商品，登录后即可加入购物车。</p>
-            <a class="btn btn--primary" th:href="@{/category}">去逛逛商城</a>
-        </section>
-    </div>
-</main>
+        <article class="cart-items-panel" th:if="${cart.isEmpty()}">
+            <div class="cart-table-wrap">
+                <div class="cart-empty">
+                    <span>♡</span>
+                    <h2>购物车还是空的</h2>
+                    <p>去分类页挑选商品，登录后即可加入购物车。</p>
+                    <a th:href="@{/category}">去逛逛商城</a>
+                </div>
+            </div>
+        </article>
+    </main>
 
-<footer th:replace="~{fragments/layout :: footer}"></footer>
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+</div>
 </body>
 </html>

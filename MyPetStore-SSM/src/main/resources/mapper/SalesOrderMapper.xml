@@ -9,7 +9,9 @@
                o.status,
                o.total_amount AS totalAmount,
                o.created_at AS createdAt,
-               (SELECT COUNT(*) FROM sales_order_item i WHERE i.order_id = o.id) AS itemCount
+               (SELECT COUNT(*) FROM sales_order_item i WHERE i.order_id = o.id) AS itemCount,
+               (SELECT i.cover_image_snapshot FROM sales_order_item i
+                WHERE i.order_id = o.id ORDER BY i.id LIMIT 1) AS coverImage
         FROM sales_order o
         WHERE o.user_id = #{userId}
         <if test="status != null">

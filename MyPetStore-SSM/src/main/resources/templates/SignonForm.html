@@ -10,12 +10,10 @@
 </head>
 <body class="account-login-page">
 <main class="account-login-shell">
-    <section class="account-login-visual" style="background-image:url('/images/dog1.gif')">
+    <section class="account-login-visual">
+        <img th:src="@{/images/products/K9-BGL-03/1.jpg}" alt="温暖灯光下的比格犬">
         <div class="account-login-shade"></div>
-        <a class="account-login-brand" th:href="@{/main}">
-            <img th:src="@{/images/logo.png}" alt="MyPetStore Logo">
-            <span>MyPetStore</span>
-        </a>
+        <a class="account-login-brand" th:href="@{/}"><img th:src="@{/images/logo.png}" alt=""><b>MyPetStore</b></a>
         <div class="account-login-copy">
             <span>WELCOME BACK</span>
             <h1>回来看看，<br>它正在等你。</h1>
@@ -28,39 +26,40 @@
     </section>
 
     <section class="account-login-panel">
-        <a class="account-login-mobile-brand" th:href="@{/main}">
-            <img th:src="@{/images/logo.png}" alt="">
-            <span>MyPetStore</span>
-        </a>
-        <div class="account-login-heading">
-            <span class="eyebrow">ACCOUNT LOGIN</span>
-            <h2>账号登录</h2>
-            <p>欢迎回来，请登录你的账户。</p>
+        <div class="account-login-form">
+            <a class="account-login-mobile-brand" th:href="@{/}">
+                <img th:src="@{/images/logo.png}" alt="">
+                <span><b>MyPetStore</b><small>陪它好好生活</small></span>
+            </a>
+            <div class="account-login-heading">
+                <span>ACCOUNT LOGIN</span>
+                <h2>账号登录</h2>
+                <p>欢迎回来，请登录你的账户。</p>
+            </div>
+
+            <div class="flash flash--error" th:if="${error != null}" th:text="${error}">登录失败</div>
+            <div class="flash flash--success" th:if="${message != null}" th:text="${message}">提示</div>
+
+            <form th:action="@{/login}" method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf}">
+                <input type="hidden" name="returnUrl" th:if="${returnUrl != null}" th:value="${returnUrl}">
+                <label class="account-field" for="username">
+                    <span>用户名</span>
+                    <input id="username" type="text" name="username" th:value="${username}" placeholder="请输入用户名"
+                           autocomplete="username" required autofocus>
+                </label>
+                <label class="account-field" for="password">
+                    <span>密码</span>
+                    <input id="password" type="password" name="password" placeholder="请输入密码"
+                           autocomplete="current-password" required>
+                </label>
+                <button type="submit" class="account-submit">登录并进入商城 <span>→</span></button>
+            </form>
+
+            <a class="account-guest-link" th:href="@{/main}">暂不登录，先逛逛商城 →</a>
+            <p class="account-agreement">本站为课程实验项目，仅使用演示账号登录，不提供注册与第三方登录。</p>
         </div>
-
-        <div class="flash flash--error" th:if="${error != null}" th:text="${error}">登录失败</div>
-        <div class="flash flash--success" th:if="${message != null}" th:text="${message}">提示</div>
-
-        <form class="account-login-form" th:action="@{/login}" method="post">
-            <input type="hidden" name="_csrf" th:value="${_csrf}">
-            <input type="hidden" name="returnUrl" th:if="${returnUrl != null}" th:value="${returnUrl}">
-            <label class="account-field">
-                <span>用户名</span>
-                <input type="text" name="username" th:value="${username}" placeholder="请输入用户名"
-                       autocomplete="username" required autofocus>
-            </label>
-            <label class="account-field">
-                <span>密码</span>
-                <input type="password" name="password" placeholder="请输入密码"
-                       autocomplete="current-password" required>
-            </label>
-            <button type="submit" class="account-submit">登录并进入商城 <span>→</span></button>
-        </form>
-
-        <p class="account-guest-link">
-            <a th:href="@{/main}">暂不登录，先逛逛商城 →</a>
-        </p>
-        <p class="account-agreement">本站为课程实验项目，仅使用演示账号登录，不提供注册与第三方登录。</p>
+        <footer>© 2026 MyPetStore · 认真挑选每一份陪伴</footer>
     </section>
 </main>
 </body>

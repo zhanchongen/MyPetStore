@@ -580,10 +580,12 @@ INSERT INTO _petstore_demo_cart (username, sku, quantity) VALUES
     ('alice', 'CT-SHORT-01', 2),
     ('alice', 'BIRD-BATH-26', 1),
     ('alice', 'REP-HEAT-26', 1),
+    ('alice', 'FISH-TEST-26', 1),
     ('bob', 'DOG-LEASH-26', 1),
     ('bob', 'FISH-GUPPY-26', 5),
-    ('bob', 'CAT-BED-26', 1),
-    ('bob', 'FISH-TEST-26', 1);
+    ('bob', 'CAT-BED-26', 1);
+-- 说明：alice 的购物车故意混入下架 / 售罄 / 有库存的商品，用来演示“不可结算商品”的拦截；
+-- bob 的购物车全部可结算，用来演示从购物车 → 确认订单 → 模拟支付的完整主流程。
 
 -- 所有外键通过用户名及SKU查找，不写死数据库自增ID。
 UPDATE _petstore_demo_orders d LEFT JOIN store_user u ON u.username=d.username

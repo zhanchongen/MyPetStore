@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: head('确认订单')}"></head>
-<body>
+<body class="cart-page">
+<div class="mpa-shell cart-shell">
 <header th:replace="~{fragments/layout :: header('cart')}"></header>
 
-<main class="cart-page">
-    <div class="cart-main">
-        <section class="cart-intro">
-            <div>
-                <span class="eyebrow">CHECKOUT</span>
-                <h1>确认订单</h1>
-                <p>请确认收货信息与商品清单。提交后会创建订单并进入模拟支付。</p>
-            </div>
-            <ol class="cart-steps">
-                <li>购物车</li>
-                <li class="is-active">确认订单</li>
-                <li>模拟支付</li>
-            </ol>
-        </section>
+<main class="cart-main">
+    <section class="cart-intro">
+        <div>
+            <span>CHECKOUT</span>
+            <h1>确认订单</h1>
+            <p>请确认收货信息与商品清单。提交后会创建订单并进入模拟支付。</p>
+        </div>
+        <div class="cart-steps" aria-label="结算步骤">
+            <span><b>01</b>购物车</span>
+            <i></i>
+            <span class="is-active"><b>02</b>确认订单</span>
+            <i></i>
+            <span><b>03</b>模拟支付</span>
+        </div>
+    </section>
 
         <div class="checkout-layout">
             <section class="panel">
@@ -73,9 +75,9 @@
                 </p>
             </aside>
         </div>
-    </div>
-</main>
+    </main>
 
 <footer th:replace="~{fragments/layout :: footer}"></footer>
+</div>
 </body>
 </html>

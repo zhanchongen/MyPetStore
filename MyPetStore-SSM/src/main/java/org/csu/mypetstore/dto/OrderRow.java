@@ -19,4 +19,6 @@ public class OrderRow {
     private BigDecimal totalAmount;
     private LocalDateTime createdAt;
     private Integer itemCount;
+    /** 订单首件商品的封面快照，用于列表缩略图；历史订单不随商品改图而变化。 */
+    private String coverImage;
 }

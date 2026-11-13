@@ -24,7 +24,7 @@
 
 body {
   margin: 0;
-  font-family: "Sora", "PingFang SC", "Segoe UI", sans-serif;
+  font-family: "Sora", "Plus Jakarta Sans", "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
   font-size: 15px;
   line-height: 1.6;
   color: var(--text);

@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: head('模拟支付')}"></head>
-<body>
+<body class="cart-page">
+<div class="mpa-shell cart-shell">
 <header th:replace="~{fragments/layout :: header('orders')}"></header>
 
-<main class="cart-page">
-    <div class="cart-main">
-        <section class="cart-intro">
-            <div>
-                <span class="eyebrow">MOCK PAYMENT</span>
-                <h1>模拟支付</h1>
-                <p>请选择本次模拟支付的结果。本页面不接入任何真实支付渠道。</p>
-            </div>
-            <ol class="cart-steps">
-                <li>购物车</li>
-                <li>确认订单</li>
-                <li class="is-active">模拟支付</li>
-            </ol>
-        </section>
+<main class="cart-main">
+    <section class="cart-intro">
+        <div>
+            <span>MOCK PAYMENT</span>
+            <h1>模拟支付</h1>
+            <p>请选择本次模拟支付的结果。本页面不接入任何真实支付渠道。</p>
+        </div>
+        <div class="cart-steps" aria-label="结算步骤">
+            <span><b>01</b>购物车</span>
+            <i></i>
+            <span><b>02</b>确认订单</span>
+            <i></i>
+            <span class="is-active"><b>03</b>模拟支付</span>
+        </div>
+    </section>
 
         <section class="panel payment-card">
             <span class="catalog-label" th:text="${order.status.label}">待支付</span>
@@ -46,9 +48,9 @@
                 <a class="btn btn--ghost" th:href="@{/orders}">我的订单</a>
             </div>
         </section>
-    </div>
-</main>
+    </main>
 
 <footer th:replace="~{fragments/layout :: footer}"></footer>
+</div>
 </body>
 </html>

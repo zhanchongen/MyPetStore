@@ -10,30 +10,58 @@
 </head>
 <body class="welcome-page">
 <main class="welcome-shell">
-    <section class="welcome-visual">
-        <img th:src="@{/images/dog1.gif}" alt="一只等待主人的小狗">
+    <section class="welcome-visual" aria-label="MyPetStore 品牌介绍">
+        <img th:src="@{/images/products/K9-BGL-03/1.jpg}" alt="温暖居家环境中的比格犬">
         <div class="welcome-visual__shade"></div>
-        <div class="welcome-visual__brand">
-            <img th:src="@{/images/logo.png}" alt="MyPetStore Logo">
-            <span>MyPetStore</span>
-        </div>
+
+        <a class="welcome-brand welcome-brand--light" th:href="@{/main}">
+            <span><img th:src="@{/images/logo.png}" alt=""></span>
+            <b>MyPetStore</b>
+        </a>
+
         <div class="welcome-visual__copy">
-            <p>WELCOME BACK</p>
+            <span class="welcome-eyebrow">WELCOME BACK</span>
             <h1>回来看看，<br>它正在等你。</h1>
-            <span>认真挑选每一份陪伴。</span>
-        </div>
-    </section>
-    <section class="welcome-panel">
-        <div class="welcome-intro">
-            <span class="eyebrow">MY PETSTORE</span>
-            <h2>陪它好好生活</h2>
             <p>登录后查看订单、管理个人资料；也可以先逛逛商城，再决定带哪一份陪伴回家。</p>
         </div>
-        <div class="welcome-actions">
-            <a class="welcome-action" th:href="@{/login}">账号登录</a>
-            <a class="welcome-action welcome-action--ghost" th:href="@{/main}">先逛逛商城</a>
+
+        <div class="welcome-points">
+            <span><b>DEMO</b><small>演示数据</small></span>
+            <span><b>NO PAY</b><small>不接入真实支付</small></span>
+            <span><b>LAB</b><small>课程实验项目</small></span>
         </div>
-        <p class="welcome-guest">课程实验项目 · 演示数据 · 不接入真实支付</p>
+    </section>
+
+    <section class="welcome-panel">
+        <div class="welcome-panel__inner">
+            <a class="welcome-brand welcome-brand--dark" th:href="@{/main}">
+                <span><img th:src="@{/images/logo.png}" alt=""></span>
+                <div><b>MyPetStore</b><small>陪它好好生活</small></div>
+            </a>
+
+            <div class="welcome-intro">
+                <span class="welcome-eyebrow">MY PETSTORE · V 1.0</span>
+                <h2>欢迎来到宠物商店</h2>
+                <p>登录后可查看订单、管理个人资料，也可以先逛逛商城再决定。课程实验项目 · 演示数据 · 不接入真实支付。</p>
+            </div>
+
+            <div class="welcome-actions">
+                <a class="welcome-action welcome-action--account" th:href="@{/login}">
+                    <span class="welcome-action__icon" aria-hidden="true">♙</span>
+                    <span><b>账号登录</b><small>使用用户名和密码登录</small></span>
+                    <i>→</i>
+                </a>
+
+                <div class="welcome-divider"><span>或者</span></div>
+
+                <a class="welcome-guest" th:href="@{/main}">先逛逛商城 <span>→</span></a>
+            </div>
+        </div>
+
+        <footer class="welcome-footer">
+            <span>© 2026 MyPetStore</span>
+            <span>认真挑选每一份陪伴</span>
+        </footer>
     </section>
 </main>
 </body>

@@ -369,6 +369,7 @@ body {
 }
 
 .payment-card {
+    position: relative;
     max-width: 640px;
     margin: 0 auto;
 }
@@ -505,14 +506,11 @@ body {
     word-break: break-all;
 }
 
-.order-detail-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
+/* 订单详情操作区沿用设计稿的两列网格；
+   旧版这里改成 flex 后与设计稿的 grid-template-columns 打架，按钮会重叠。
+   表单本身不占格子，用 display:contents 让里面的按钮直接成为网格项。 */
 .order-detail-actions form {
-    display: inline-flex;
+    display: contents;
 }
 
 /* 登录 */
@@ -525,31 +523,8 @@ body {
     gap: 2px;
 }
 
-/* 欢迎页与错误页 */
-.welcome-actions {
-    display: grid;
-    gap: 10px;
-    margin-top: 22px;
-}
-
-.welcome-action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    border-radius: 8px;
-    background: var(--brand);
-    color: #fff;
-    text-decoration: none;
-    font-weight: 700;
-}
-
-.welcome-action--ghost {
-    background: #fff;
-    color: var(--brand);
-    border: 1px solid var(--line);
-}
-
+/* 错误页
+   （欢迎页 .welcome-* 样式由 jpetstore.css 提供，这里不再覆盖） */
 .error-page {
     min-height: 100vh;
     display: grid;
@@ -589,6 +564,111 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+}
+
+/* 订单状态标签比设计稿多一列：设计稿是 5 列（5 种状态），
+   我们多一个"全部"，桌面端排 6 列，移动端仍用设计稿的横向滚动布局。 */
+@media (min-width: 901px) {
+    .orders-tabs {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+/* ===== 结算 / 支付页：设计稿没有的小工具类 ===== */
+.checkout-note {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.checkout-submit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+/* ===== 购物车：设计稿没有覆盖到的少量元素 ===== */
+/* 设计稿的 .cart-product 是三列（勾选列 + 128px 图 + 文案）；
+   本工程没有勾选功能，改为两列，避免图片被塞进 20px 列。 */
+.cart-product {
+    grid-template-columns: 128px minmax(0, 1fr);
+}
+
+.cart-line-warning {
+    margin-top: 6px;
+    color: var(--warning);
+    font-size: 12px;
+}
+
+.cart-unavailable {
+    display: inline-flex;
+    padding: 4px 9px;
+    border-radius: 4px;
+    background: #f3f4f2;
+    color: #8c9195;
+    font-size: 12px;
+}
+
+.cart-invalid-note {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    border: 1px solid #f0d5ab;
+    border-radius: 8px;
+    background: #fffaf2;
+    color: var(--warning);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+/* 账户中心左侧导航里的「退出登录」：设计稿只写了 .account-nav>a，
+   我们的退出按钮是 POST 表单，这里把它对齐成同样的行样式。 */
+.account-nav .logout-form {
+    display: block;
+}
+
+.account-nav .logout-form .nav-button {
+    display: grid;
+    grid-template-columns: 34px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 13px 8px;
+    border: 0;
+    border-bottom: 1px solid #ececea;
+    background: none;
+    color: #454c52;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.account-nav .logout-form .nav-button > b {
+    display: grid;
+    width: 29px;
+    height: 29px;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    background: #8d9398;
+}
+
+.account-nav .logout-form .nav-button > span {
+    display: grid;
+    font-size: .73rem;
+    font-weight: 700;
+}
+
+.account-nav .logout-form .nav-button small {
+    color: #9a9ea2;
+    font-size: .58rem;
+    font-weight: 400;
+}
+
+.account-nav .logout-form .nav-button > i {
+    color: var(--account-gold, #c4a642);
+    font-style: normal;
 }
 
 @media (max-width: 900px) {
