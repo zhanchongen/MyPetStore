@@ -105,9 +105,12 @@ mvn test
 # 管理端
 cd MyPetStore-admin
 mvn test
+
+# 用户端集成测试（*IT，需要 3307 上的 MySQL 与演示数据）
+mvn test "-Dtest=CategoryMapperIT,ProductMapperIT,CategoryServiceIT,ProductServiceIT"
 ```
 
-用户端 43 个、管理端 24 个测试，共 67 个，均不依赖数据库。数据库导入、两端启动、用户端购物/下单/支付/取消、管理端分类/商品/订单/用户操作的手工 E2E 步骤与结果见 [docs/验证记录.md](docs/验证记录.md)；`scripts/user_smoke.py` 与 `scripts/admin_smoke.py` 可重复执行两端只读 smoke。
+用户端 43 个、管理端 24 个测试，共 67 个，均不依赖数据库；另有 19 个 `*IT` 集成测试（分类/商品 Mapper 与 Service，连真实库、事务回滚），Surefire 默认不匹配 `*IT`，需要显式指定 `-Dtest=` 运行。数据库导入、两端启动、用户端购物/下单/支付/取消、管理端分类/商品/订单/用户操作的手工 E2E 步骤与结果见 [docs/验证记录.md](docs/验证记录.md)；`scripts/user_smoke.py` 与 `scripts/admin_smoke.py` 可重复执行两端只读 smoke。
 
 ## 视觉验收
 
@@ -133,6 +136,7 @@ node scripts/capture-pages.mjs rendered
 - [验证记录](docs/验证记录.md)
 - [视觉验收](docs/视觉验收.md)
 - [视频步骤对照](docs/视频对照.md)
+- [商品模块对照](docs/商品模块对照.md)
 - [提交记录](docs/提交记录.md)
 
 ## 说明
