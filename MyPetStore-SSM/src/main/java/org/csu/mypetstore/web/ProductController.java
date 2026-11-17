@@ -83,8 +83,16 @@ public class ProductController {
         return "Category";
     }
 
-    @GetMapping("/product/{id}")
-    public String product(@PathVariable Long id, Model model) {
+    /**
+     * 商品详情。视频约定用 {@code /product?id=<真实ID>}；为兼容已有链接，
+     * {@code /product/{id}} 也映射到同一个方法，两者都只认数据库商品 ID，
+     * 不再使用原型里的 {@code ?sku=}。
+     */
+    @GetMapping({"/product", "/product/{id}"})
+    public String product(@PathVariable(name = "id", required = false) String pathId,
+                          @RequestParam(name = "id", required = false) String queryId,
+                          Model model) {
+        Long id = parseProductId(pathId != null ? pathId : queryId);
         ProductDetailData detail = productService.detail(id);
         model.addAttribute("detail", detail);
         model.addAttribute("product", detail.product());
@@ -93,6 +101,17 @@ public class ProductController {
         model.addAttribute("images", detail.images());
         model.addAttribute("cover", productService.coverOf(detail.product()));
         return "Product";
+    }
+
+    private Long parseProductId(String raw) {
+        if (raw == null || raw.isBlank()) {
+            throw new BadRequestException("缺少商品 ID。");
+        }
+        try {
+            return Long.valueOf(raw.trim());
+        } catch (NumberFormatException ex) {
+            throw new BadRequestException("商品 ID 不正确。");
+        }
     }
 
     private Long parseCategoryId(String raw) {

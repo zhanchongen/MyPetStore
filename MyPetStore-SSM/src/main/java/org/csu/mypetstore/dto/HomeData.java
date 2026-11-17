@@ -11,6 +11,10 @@ public record HomeData(
         List<Product> newArrivals,
         List<Product> featured) {
 
-    public record CategoryNode(Category category, List<Category> children, String icon) {
+    /**
+     * 一级分类节点。只放数据库里真实存在的字段（名称、编码、二级分类），
+     * 不再挂图标：表里没有图标字段，硬编码 emoji 属于伪造展示内容。
+     */
+    public record CategoryNode(Category category, List<Category> children) {
     }
 }

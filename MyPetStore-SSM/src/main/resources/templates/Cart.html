@@ -47,12 +47,12 @@
                         <tr th:each="line : ${cart.lines()}" th:classappend="${!line.isAvailable() ? ' is-invalid' : ''}">
                             <td>
                                 <div class="cart-product">
-                                    <a class="cart-product__image" th:href="@{/product/{id}(id=${line.productId})}">
+                                    <a class="cart-product__image" th:href="@{/product(id=${line.productId})}">
                                         <img th:src="${line.coverImage != null ? '/' + line.coverImage : '/images/logo.png'}"
                                              th:alt="${line.name}">
                                     </a>
                                     <div class="cart-product__info">
-                                        <h2><a th:href="@{/product/{id}(id=${line.productId})}" th:text="${line.name}">商品名称</a></h2>
+                                        <h2><a th:href="@{/product(id=${line.productId})}" th:text="${line.name}">商品名称</a></h2>
                                         <p th:text="'SKU：' + ${line.sku}">SKU</p>
                                         <p class="cart-line-warning" th:if="${!line.isAvailable()}"
                                            th:text="${line.invalidReason()}">商品不可购买</p>

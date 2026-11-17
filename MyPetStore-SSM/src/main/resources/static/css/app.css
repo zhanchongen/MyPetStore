@@ -574,6 +574,17 @@ body {
     }
 }
 
+/* 首页分类条的第二行小字：一级分类编码下方的二级分类名称。
+   设计稿只有 .category-strip small（灰色、加宽字距），这里放宽字距并允许换行。 */
+.category-strip .category-sub {
+    margin-top: 2px;
+    color: #9a9a97;
+    font-size: 0.62rem;
+    letter-spacing: 0;
+    line-height: 1.4;
+    text-align: center;
+}
+
 /* ===== 结算 / 支付页：设计稿没有的小工具类 ===== */
 .checkout-note {
     margin: 0;

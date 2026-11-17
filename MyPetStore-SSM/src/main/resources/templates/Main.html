@@ -24,12 +24,13 @@
             </div>
         </section>
 
-        <section class="category-strip" aria-label="商品分类" th:if="${!#lists.isEmpty(home.categories())}">
+        <section class="category-strip" aria-label="宠物分类" th:if="${!#lists.isEmpty(home.categories())}">
             <a th:each="node : ${home.categories()}"
                th:href="@{/category(categoryId=${node.category().id})}">
-                <span class="category-icon" th:text="${node.icon()}">🐾</span>
                 <b th:text="${node.category().name}">犬类</b>
-                <small th:text="${#lists.size(node.children())} + ' 个小类'">2 个小类</small>
+                <small th:text="${node.category().code}">DOGS</small>
+                <small class="category-sub" th:if="${!#lists.isEmpty(node.children())}"
+                       th:text="${#strings.listJoin(node.children().![name], ' / ')}">宠物 / 用品</small>
             </a>
         </section>
 
@@ -44,10 +45,10 @@
             <div class="new-grid">
                 <a class="feature-product"
                    th:with="p=${home.newArrivals()[0]}"
-                   th:href="@{/product/{id}(id=${p.id})}">
+                   th:href="@{/product(id=${p.id})}">
                     <img th:src="${p.coverImage != null ? '/' + p.coverImage : '/images/logo.png'}"
-                         th:alt="${p.name}">
-                    <span class="feature-product__tag">NEW</span>
+                         th:alt="${p.name}"
+                         onerror="this.onerror=null;this.src='/images/logo.png'">
                     <div class="feature-product__info">
                         <small th:text="${p.sku}">SKU</small>
                         <h3 th:text="${p.name}">商品名称</h3>
@@ -58,9 +59,10 @@
                 <div class="new-list">
                     <a th:each="p, it : ${home.newArrivals()}"
                        th:if="${it.index > 0}"
-                       th:href="@{/product/{id}(id=${p.id})}">
+                       th:href="@{/product(id=${p.id})}">
                         <img th:src="${p.coverImage != null ? '/' + p.coverImage : '/images/logo.png'}"
-                             th:alt="${p.name}" loading="lazy">
+                             th:alt="${p.name}" loading="lazy"
+                             onerror="this.onerror=null;this.src='/images/logo.png'">
                         <span>
                             <small th:text="${p.sku}">SKU</small>
                             <b th:text="${p.name}">商品名称</b>
@@ -102,19 +104,18 @@
                 <a th:href="@{/category}">全部商品 <span>→</span></a>
             </div>
             <div class="recommend-grid">
-                <article th:each="p, it : ${home.featured()}">
-                    <a class="recommend-media" th:href="@{/product/{id}(id=${p.id})}">
+                <article th:each="p : ${home.featured()}">
+                    <a class="recommend-media" th:href="@{/product(id=${p.id})}">
                         <img th:src="${p.coverImage != null ? '/' + p.coverImage : '/images/logo.png'}"
-                             th:alt="${p.name}" loading="lazy">
-                        <span th:if="${it.index == 0}">热卖</span>
-                        <span th:if="${it.index == 1}">新品</span>
+                             th:alt="${p.name}" loading="lazy"
+                             onerror="this.onerror=null;this.src='/images/logo.png'">
                     </a>
                     <small th:text="${p.sku}">SKU</small>
-                    <h3><a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">商品名称</a></h3>
+                    <h3><a th:href="@{/product(id=${p.id})}" th:text="${p.name}">商品名称</a></h3>
                     <p th:text="${p.summary}">商品简介</p>
                     <div>
                         <strong th:text="${@money.format(p.price)}">¥0.00</strong>
-                        <a th:href="@{/product/{id}(id=${p.id})}" aria-label="查看详情">→</a>
+                        <a th:href="@{/product(id=${p.id})}" aria-label="查看详情">→</a>
                     </div>
                 </article>
             </div>

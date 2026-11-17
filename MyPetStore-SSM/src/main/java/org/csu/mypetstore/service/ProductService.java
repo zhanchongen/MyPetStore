@@ -54,8 +54,7 @@ public class ProductService {
             }
         }
         List<HomeData.CategoryNode> nodes = topLevel.stream()
-                .map(top -> new HomeData.CategoryNode(top, children.getOrDefault(top.getId(), List.of()),
-                        categoryService.iconOf(top)))
+                .map(top -> new HomeData.CategoryNode(top, children.getOrDefault(top.getId(), List.of())))
                 .toList();
         return new HomeData(nodes, productMapper.selectHomeNew(3), productMapper.selectHomeFeatured(4));
     }

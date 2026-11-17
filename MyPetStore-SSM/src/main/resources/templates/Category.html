@@ -82,7 +82,7 @@
                     <article class="catalog-product-card" th:each="p : ${pageResult.records()}"
                              th:with="img=${p.coverImage != null ? '/' + p.coverImage : '/images/logo.png'}"
                              th:classappend="${p.isSoldOut() ? ' is-sold-out' : ''}">
-                        <a class="catalog-product-card__media" th:href="@{/product/{id}(id=${p.id})}">
+                        <a class="catalog-product-card__media" th:href="@{/product(id=${p.id})}">
                             <img th:src="${img}" th:alt="${p.name}" loading="lazy">
                             <span class="catalog-label" th:text="${p.topCategoryName}">分类</span>
                         </a>
@@ -92,11 +92,11 @@
                                 <span th:class="${p.isSoldOut() ? 'stock-out' : (p.stock <= 5 ? 'stock-low' : 'stock-ok')}"
                                       th:text="${p.isSoldOut() ? '暂时售罄' : (p.stock <= 5 ? '仅剩 ' + p.stock + ' 件' : '现货')}">现货</span>
                             </div>
-                            <h2><a th:href="@{/product/{id}(id=${p.id})}" th:text="${p.name}">商品名称</a></h2>
+                            <h2><a th:href="@{/product(id=${p.id})}" th:text="${p.name}">商品名称</a></h2>
                             <p th:text="${p.summary}">商品简介</p>
                             <div class="catalog-product-card__bottom">
                                 <strong class="money" th:text="${@money.format(p.price)}">¥0.00</strong>
-                                <a class="catalog-buy" th:href="@{/product/{id}(id=${p.id})}">查看详情</a>
+                                <a class="catalog-buy" th:href="@{/product(id=${p.id})}">查看详情</a>
                             </div>
                         </div>
                     </article>

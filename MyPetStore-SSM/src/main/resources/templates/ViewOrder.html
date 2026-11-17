@@ -73,13 +73,13 @@
                         <small th:text="'共 ' + ${#lists.size(items)} + ' 种商品'">共 1 种商品</small>
                     </header>
                     <div class="order-product-row" th:each="item : ${items}">
-                        <a th:href="@{/product/{id}(id=${item.productId})}">
+                        <a th:href="@{/product(id=${item.productId})}">
                             <img th:src="${item.coverImageSnapshot != null ? '/' + item.coverImageSnapshot : '/images/logo.png'}"
                                  th:alt="${item.productNameSnapshot}">
                         </a>
                         <div>
                             <small th:text="${item.skuSnapshot}">SKU</small>
-                            <h2><a th:href="@{/product/{id}(id=${item.productId})}"
+                            <h2><a th:href="@{/product(id=${item.productId})}"
                                    th:text="${item.productNameSnapshot}">商品名称</a></h2>
                             <p th:text="'单价 ' + ${@money.format(item.unitPrice)}">单价</p>
                         </div>

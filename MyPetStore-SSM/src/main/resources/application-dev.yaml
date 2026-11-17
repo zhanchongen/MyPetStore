@@ -6,6 +6,13 @@ spring:
       cache:
         period: 0
 
+mybatis-plus:
+  configuration:
+    # 通过 SLF4J 输出执行的 SQL，配合下面的 debug 级别可以看到语句、参数与影响行数
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
 logging:
   level:
     org.csu.mypetstore: DEBUG
+    # 只把 Mapper 包调到 debug，避免整个应用的日志被刷屏
+    org.csu.mypetstore.mapper: DEBUG

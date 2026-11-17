@@ -36,6 +36,8 @@ server:
       force: true
     session:
       timeout: 30m
+      # 只用 Cookie 传递会话，关闭 URL 重写（避免 /category;jsessionid=... 这种链接）
+      tracking-modes: cookie
       cookie:
         name: PETSTORE_USER_SESSION
         http-only: true

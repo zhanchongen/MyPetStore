@@ -13,13 +13,6 @@ import java.util.Map;
 @Service
 public class CategoryService {
 
-    private static final Map<String, String> ICONS = Map.of(
-            "DOGS", "🐕",
-            "CATS", "🐈",
-            "FISH", "🐠",
-            "BIRDS", "🦜",
-            "REPTILES", "🦎");
-
     private final CategoryMapper categoryMapper;
 
     public CategoryService(CategoryMapper categoryMapper) {
@@ -70,9 +63,5 @@ public class CategoryService {
             return ProductType.SUPPLIES;
         }
         return null;
-    }
-
-    public String iconOf(Category top) {
-        return top == null ? "🐾" : ICONS.getOrDefault(top.getCode(), "🐾");
     }
 }
